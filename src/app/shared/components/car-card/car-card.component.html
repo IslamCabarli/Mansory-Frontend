@@ -1,1 +1,92 @@
-<p>car-card works!</p>
+<div class="car-card group cursor-pointer h-full flex flex-col" [routerLink]="['/cars', car.id]">
+  <!-- Image Container -->
+  <div class="relative overflow-hidden aspect-[4/3] bg-mansory-light-gray">
+    <img 
+      [src]="getCarImage()" 
+      [alt]="car.name"
+      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+      loading="lazy"
+    />
+    
+    <!-- Status Badge -->
+    <div class="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider border backdrop-blur-sm"
+         [ngClass]="getStatusBadgeClass()">
+      {{ getStatusText() }}
+    </div>
+
+    <!-- Featured Badge -->
+    @if (car.is_featured) {
+      <div class="absolute top-4 left-4 px-3 py-1 bg-mansory-gold text-black rounded-full text-xs font-semibold uppercase tracking-wider">
+        Featured
+      </div>
+    }
+
+    <!-- Hover Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+      <button class="btn-luxury-outline w-full opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+        View Details
+      </button>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="p-6 flex-1 flex flex-col bg-mansory-gray">
+    <!-- Brand -->
+    @if (car.brand) {
+      <p class="text-mansory-gold text-xs font-semibold uppercase tracking-widest mb-2">
+        {{ car.brand.name }}
+      </p>
+    }
+
+    <!-- Name -->
+    <h3 class="text-white font-heading text-xl mb-3 line-clamp-2 min-h-[3.5rem] group-hover:text-mansory-gold transition-colors">
+      {{ car.name }}
+    </h3>
+
+    <!-- Specs -->
+    <div class="flex flex-wrap gap-x-4 gap-y-2 text-sm text-gray-400 mb-4">
+      @if (car.registration_year) {
+        <div class="flex items-center space-x-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+          <span>{{ car.registration_year }}</span>
+        </div>
+      }
+      
+      @if (car.mileage) {
+        <div class="flex items-center space-x-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          <span>{{ car.mileage | number }} km</span>
+        </div>
+      }
+
+      @if (car.power_hp) {
+        <div class="flex items-center space-x-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+          </svg>
+          <span>{{ car.power_hp }} HP</span>
+        </div>
+      }
+
+      @if (car.fuel_type) {
+        <div class="flex items-center space-x-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+          <span>{{ car.fuel_type }}</span>
+        </div>
+      }
+    </div>
+
+    <!-- Price -->
+    <div class="mt-auto pt-4 border-t border-mansory-light-gray">
+      <p class="text-mansory-gold font-heading text-2xl font-semibold">
+        {{ formatPrice() }}
+      </p>
+    </div>
+  </div>
+</div>
