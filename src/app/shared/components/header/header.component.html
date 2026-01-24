@@ -1,1 +1,100 @@
-<p>header works!</p>
+<header class="fixed top-0 left-0 right-0 z-50 bg-mansory-black/95 backdrop-blur-md border-b border-mansory-gray">
+  <div class="container-custom">
+    <nav class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a routerLink="/home" class="flex items-center space-x-3">
+        <div class="text-3xl font-heading font-bold tracking-wider">
+          <span class="text-mansory-gold">MANSORY</span>
+        </div>
+      </a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center space-x-8">
+        <a routerLink="/home" routerLinkActive="text-mansory-gold" [routerLinkActiveOptions]="{exact: true}"
+           class="text-white hover:text-mansory-gold transition-colors duration-300 uppercase text-sm tracking-wider font-medium">
+          Home
+        </a>
+        <a routerLink="/cars" routerLinkActive="text-mansory-gold"
+           class="text-white hover:text-mansory-gold transition-colors duration-300 uppercase text-sm tracking-wider font-medium">
+          Cars
+        </a>
+        
+        @if (authService.isUserAdmin()) {
+          <a routerLink="/admin" routerLinkActive="text-mansory-gold"
+             class="text-white hover:text-mansory-gold transition-colors duration-300 uppercase text-sm tracking-wider font-medium">
+            Admin
+          </a>
+        }
+
+        @if (authService.isLoggedIn()) {
+          <div class="flex items-center space-x-4">
+            <span class="text-gray-400 text-sm">{{ authService.currentUser()?.name }}</span>
+            <button (click)="logout()" 
+                    class="btn-luxury-outline py-2 px-6 text-xs">
+              Logout
+            </button>
+          </div>
+        } @else {
+          <a routerLink="/admin" 
+             class="btn-luxury py-2 px-6 text-xs">
+            Login
+          </a>
+        }
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button (click)="toggleMenu()" class="md:hidden text-white p-2">
+        @if (!isMenuOpen()) {
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        } @else {
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        }
+      </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    @if (isMenuOpen()) {
+      <div class="md:hidden pb-6 animate-fade-in">
+        <div class="flex flex-col space-y-4">
+          <a routerLink="/home" (click)="toggleMenu()"
+             class="text-white hover:text-mansory-gold transition-colors duration-300 uppercase text-sm tracking-wider font-medium py-2">
+            Home
+          </a>
+          <a routerLink="/cars" (click)="toggleMenu()"
+             class="text-white hover:text-mansory-gold transition-colors duration-300 uppercase text-sm tracking-wider font-medium py-2">
+            Cars
+          </a>
+          
+          @if (authService.isUserAdmin()) {
+            <a routerLink="/admin" (click)="toggleMenu()"
+               class="text-white hover:text-mansory-gold transition-colors duration-300 uppercase text-sm tracking-wider font-medium py-2">
+              Admin
+            </a>
+          }
+
+          @if (authService.isLoggedIn()) {
+            <div class="pt-4 border-t border-mansory-gray">
+              <p class="text-gray-400 text-sm mb-3">{{ authService.currentUser()?.name }}</p>
+              <button (click)="logout()" 
+                      class="btn-luxury-outline w-full py-2 text-xs">
+                Logout
+              </button>
+            </div>
+          } @else {
+            <a routerLink="/admin" (click)="toggleMenu()"
+               class="btn-luxury w-full py-2 text-xs text-center">
+              Login
+            </a>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</header>
+
+<!-- Spacer for fixed header -->
+<div class="h-20"></div>
