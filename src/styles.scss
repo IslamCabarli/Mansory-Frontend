@@ -1,1 +1,97 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+// Google Fonts
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: #0a0a0a;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+}
+
+// Smooth scroll
+html {
+  scroll-behavior: smooth;
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4af37;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c9a332;
+}
+
+// Luxury button
+.btn-luxury {
+  @apply px-8 py-3 bg-mansory-gold text-black font-semibold tracking-wider uppercase text-sm;
+  @apply hover:bg-opacity-90 transition-all duration-300;
+  @apply border border-mansory-gold hover:shadow-lg hover:shadow-mansory-gold/30;
+}
+
+.btn-luxury-outline {
+  @apply px-8 py-3 border-2 border-mansory-gold text-mansory-gold font-semibold tracking-wider uppercase text-sm;
+  @apply hover:bg-mansory-gold hover:text-black transition-all duration-300;
+}
+
+// Card hover effect (Mansory style)
+.car-card {
+  @apply relative overflow-hidden bg-mansory-gray rounded-sm;
+  @apply transition-all duration-500 ease-out;
+
+  &:hover {
+    @apply transform scale-105 shadow-2xl shadow-mansory-gold/20;
+
+    img {
+      @apply scale-110;
+    }
+  }
+
+  img {
+    @apply transition-transform duration-700 ease-out;
+  }
+}
+
+// Gold divider line
+.gold-line {
+  @apply h-px w-20 bg-mansory-gold mx-auto my-6;
+}
+
+// Section padding
+.section-padding {
+  @apply py-20 px-4 md:px-8 lg:px-16;
+}
+
+// Container
+.container-custom {
+  @apply max-w-7xl mx-auto px-4 md:px-8;
+}
