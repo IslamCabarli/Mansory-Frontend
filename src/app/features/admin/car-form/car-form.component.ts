@@ -46,6 +46,8 @@ export class CarFormComponent implements OnInit {
     is_featured: false
   };
 
+  constructor(private carService: CarService) {}
+
   ngOnInit(): void {
     if (this.car) {
       this.formData = {
@@ -115,8 +117,8 @@ export class CarFormComponent implements OnInit {
       // Create new car
       this.carService.create(this.formData).subscribe({
         next: (response) => {
-          if (response.success && !Array.isArray(response.data)) {
-            const newCar = response.data;
+          if (response.success && !Array.isArray(response.data) && 'id' in response.data) {
+            const newCar = response.data as Car;
             
             // Upload images if any
             if (this.selectedImages.length > 0) {
