@@ -1,1 +1,187 @@
-<p>cars works!</p>
+<!-- Page Header -->
+<section class="bg-gradient-to-r from-mansory-black to-mansory-gray py-20">
+  <div class="container-custom text-center">
+    <h1 class="text-5xl md:text-6xl font-heading font-bold text-white mb-4">
+      Our <span class="text-mansory-gold">Collection</span>
+    </h1>
+    <div class="gold-line"></div>
+    <p class="text-gray-300 mt-6 max-w-2xl mx-auto">
+      Discover our exclusive range of luxury vehicles
+    </p>
+  </div>
+</section>
+
+<!-- Filters & Cars Grid -->
+<section class="section-padding bg-mansory-black">
+  <div class="container-custom">
+    <!-- Filters -->
+    <div class="bg-mansory-gray p-6 rounded-sm mb-12 border border-mansory-light-gray">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Search -->
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Search</label>
+          <input 
+            type="text" 
+            [(ngModel)]="filters.search"
+            (keyup.enter)="applyFilters()"
+            placeholder="Search cars..."
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+        </div>
+
+        <!-- Brand -->
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Brand</label>
+          <select 
+            [(ngModel)]="filters.brand_id"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          >
+            <option [value]="undefined">All Brands</option>
+            @for (brand of brands(); track brand.id) {
+              <option [value]="brand.id">{{ brand.name }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Status -->
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Status</label>
+          <select 
+            [(ngModel)]="filters.status"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          >
+            <option [value]="undefined">All Status</option>
+            <option value="available">Available</option>
+            <option value="reserved">Reserved</option>
+            <option value="sold">Sold</option>
+          </select>
+        </div>
+
+        <!-- Sort -->
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Sort By</label>
+          <select 
+            [(ngModel)]="filters.sort_by"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          >
+            <option value="created_at">Newest</option>
+            <option value="price">Price</option>
+            <option value="name">Name</option>
+            <option value="mileage">Mileage</option>
+          </select>
+        </div>
+
+        <!-- Price Range -->
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Min Price (€)</label>
+          <input 
+            type="number" 
+            [(ngModel)]="filters.min_price"
+            placeholder="Min"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Max Price (€)</label>
+          <input 
+            type="number" 
+            [(ngModel)]="filters.max_price"
+            placeholder="Max"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex items-end gap-2">
+          <button 
+            (click)="applyFilters()"
+            class="flex-1 btn-luxury py-2 text-xs"
+          >
+            Apply
+          </button>
+          <button 
+            (click)="resetFilters()"
+            class="flex-1 btn-luxury-outline py-2 text-xs"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Results Count -->
+      <div class="mt-4 text-sm text-gray-400">
+        Showing {{ cars().length }} of {{ totalCars() }} cars
+      </div>
+    </div>
+
+    <!-- Loading -->
+    @if (isLoading()) {
+      <app-loader />
+    }
+    
+    <!-- Cars Grid -->
+    @else if (cars().length > 0) {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        @for (car of cars(); track car.id) {
+          <app-car-card [car]="car" />
+        }
+      </div>
+
+      <!-- Pagination -->
+      @if (totalPages() > 1) {
+        <div class="flex justify-center items-center space-x-2">
+          <!-- Previous -->
+          <button 
+            (click)="changePage(currentPage() - 1)"
+            [disabled]="currentPage() === 1"
+            class="px-4 py-2 bg-mansory-gray text-white rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-mansory-gold hover:text-black transition-colors"
+          >
+            ← Prev
+          </button>
+
+          <!-- Page Numbers -->
+          @for (page of pages(); track page) {
+            @if (page === -1) {
+              <span class="px-4 py-2 text-gray-400">...</span>
+            } @else {
+              <button 
+                (click)="changePage(page)"
+                [class.bg-mansory-gold]="currentPage() === page"
+                [class.text-black]="currentPage() === page"
+                [class.bg-mansory-gray]="currentPage() !== page"
+                [class.text-white]="currentPage() !== page"
+                class="px-4 py-2 rounded hover:bg-mansory-gold hover:text-black transition-colors"
+              >
+                {{ page }}
+              </button>
+            }
+          }
+
+          <!-- Next -->
+          <button 
+            (click)="changePage(currentPage() + 1)"
+            [disabled]="currentPage() === totalPages()"
+            class="px-4 py-2 bg-mansory-gray text-white rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-mansory-gold hover:text-black transition-colors"
+          >
+            Next →
+          </button>
+        </div>
+      }
+    }
+    
+    <!-- No Results -->
+    @else {
+      <div class="text-center py-20">
+        <svg class="w-24 h-24 mx-auto text-gray-600 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <h3 class="text-2xl font-heading text-white mb-2">No Cars Found</h3>
+        <p class="text-gray-400 mb-6">Try adjusting your filters</p>
+        <button (click)="resetFilters()" class="btn-luxury">
+          Reset Filters
+        </button>
+      </div>
+    }
+  </div>
+</section>
