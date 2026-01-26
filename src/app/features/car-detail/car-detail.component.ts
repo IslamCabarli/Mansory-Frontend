@@ -38,12 +38,13 @@ export class CarDetailComponent implements OnInit {
     this.carService.getById(id).subscribe({
       next: (response) => {
         if (response.success && !Array.isArray(response.data)) {
-          this.car.set(response.data);
+          const carData = response.data as Car;
+          this.car.set(carData);
           
           // Set first image as selected
-          if (response.data.images && response.data.images.length > 0) {
-            const primary = response.data.images.find(img => img.is_primary);
-            this.selectedImage.set(primary || response.data.images[0]);
+          if (carData.images && carData.images.length > 0) {
+            const primary = carData.images.find((img: CarImage) => img.is_primary);
+            this.selectedImage.set(primary || carData.images[0]);
           }
         }
         this.isLoading.set(false);
