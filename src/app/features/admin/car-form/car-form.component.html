@@ -1,1 +1,341 @@
-<p>car-form works!</p>
+<div class="bg-mansory-gray rounded-sm border border-mansory-light-gray p-8">
+  <!-- Form Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-heading font-semibold text-white">
+      {{ car ? 'Edit Car' : 'Add New Car' }}
+    </h2>
+    <button (click)="cancel()" class="text-gray-400 hover:text-white transition-colors">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Error Message -->
+  @if (errorMessage()) {
+    <div class="bg-red-500/10 border border-red-500 text-red-400 px-4 py-3 rounded mb-6">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  <!-- Form -->
+  <form (ngSubmit)="submit()" class="space-y-6">
+    <!-- Basic Info Section -->
+    <div class="border-b border-mansory-light-gray pb-6">
+      <h3 class="text-lg font-semibold text-white mb-4">Basic Information</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Brand -->
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Brand *</label>
+          <select 
+            [(ngModel)]="formData.brand_id" 
+            name="brand_id"
+            required
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          >
+            <option [value]="0">Select Brand</option>
+            @for (brand of brands; track brand.id) {
+              <option [value]="brand.id">{{ brand.name }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Name -->
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Car Name *</label>
+          <input 
+            type="text" 
+            [(ngModel)]="formData.name"
+            name="name"
+            required
+            placeholder="Mercedes-Benz S-Class"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+        </div>
+
+        <!-- Status -->
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Status *</label>
+          <select 
+            [(ngModel)]="formData.status"
+            name="status"
+            required
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          >
+            <option value="available">Available</option>
+            <option value="reserved">Reserved</option>
+            <option value="sold">Sold</option>
+          </select>
+        </div>
+
+        <!-- Year -->
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Registration Year</label>
+          <input 
+            type="text" 
+            [(ngModel)]="formData.registration_year"
+            name="registration_year"
+            placeholder="2023"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+        </div>
+
+        <!-- Price -->
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Price</label>
+          <input 
+            type="number" 
+            [(ngModel)]="formData.price"
+            name="price"
+            placeholder="150000"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+        </div>
+
+        <!-- Currency -->
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Currency</label>
+          <select 
+            [(ngModel)]="formData.currency"
+            name="currency"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          >
+            <option value="EUR">EUR</option>
+            <option value="USD">USD</option>
+            <option value="GBP">GBP</option>
+          </select>
+        </div>
+
+        <!-- Featured -->
+        <div class="md:col-span-2">
+          <label class="flex items-center space-x-3 cursor-pointer">
+            <input 
+              type="checkbox" 
+              [(ngModel)]="formData.is_featured"
+              name="is_featured"
+              class="w-5 h-5 text-mansory-gold bg-mansory-black border-mansory-light-gray rounded focus:ring-mansory-gold focus:ring-2"
+            />
+            <span class="text-white font-medium">Featured Vehicle</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="border-b border-mansory-light-gray pb-6">
+      <h3 class="text-lg font-semibold text-white mb-4">Description</h3>
+      <textarea 
+        [(ngModel)]="formData.description"
+        name="description"
+        rows="4"
+        placeholder="Enter car description..."
+        class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+      ></textarea>
+    </div>
+
+    <!-- Technical Specs -->
+    <div class="border-b border-mansory-light-gray pb-6">
+      <h3 class="text-lg font-semibold text-white mb-4">Technical Specifications</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Mileage (km)</label>
+          <input 
+            type="number" 
+            [(ngModel)]="formData.mileage"
+            name="mileage"
+            placeholder="50000"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Body Type</label>
+          <input 
+            type="text" 
+            [(ngModel)]="formData.body_type"
+            name="body_type"
+            placeholder="Sedan, SUV, Coupe"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Engine</label>
+          <input 
+            type="text" 
+            [(ngModel)]="formData.engine"
+            name="engine"
+            placeholder="V8 Biturbo"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Fuel Type</label>
+          <input 
+            type="text" 
+            [(ngModel)]="formData.fuel_type"
+            name="fuel_type"
+            placeholder="Petrol, Diesel, Electric"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Transmission</label>
+          <input 
+            type="text" 
+            [(ngModel)]="formData.transmission"
+            name="transmission"
+            placeholder="Automatic, Manual"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Power (HP)</label>
+          <input 
+            type="number" 
+            [(ngModel)]="formData.power_hp"
+            name="power_hp"
+            placeholder="450"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Power (KW)</label>
+          <input 
+            type="number" 
+            [(ngModel)]="formData.power_kw"
+            name="power_kw"
+            placeholder="331"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Top Speed (km/h)</label>
+          <input 
+            type="number" 
+            [(ngModel)]="formData.v_max"
+            name="v_max"
+            placeholder="250"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">0-100 km/h (seconds)</label>
+          <input 
+            type="text" 
+            [(ngModel)]="formData.acceleration"
+            name="acceleration"
+            placeholder="4.5"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Interior/Exterior -->
+    <div class="border-b border-mansory-light-gray pb-6">
+      <h3 class="text-lg font-semibold text-white mb-4">Colors & Details</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Exterior Color</label>
+          <input 
+            type="text" 
+            [(ngModel)]="formData.color_exterior"
+            name="color_exterior"
+            placeholder="Matte Black"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Interior Color</label>
+          <input 
+            type="text" 
+            [(ngModel)]="formData.color_interior"
+            name="color_interior"
+            placeholder="Black Leather"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Doors
+          <input 
+            type="number" 
+            [(ngModel)]="formData.doors"
+            name="doors"
+            min="2"
+            max="5"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+          </label>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Seats
+          <input
+          
+            type="number" 
+            [(ngModel)]="formData.seats"
+            name="seats"
+            min="2"
+            max="9"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
+          />
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Images -->
+    <div class="border-b border-mansory-light-gray pb-6">
+      <h3 class="text-lg font-semibold text-white mb-4">Images</h3>
+      <div>
+        <label class="block text-sm font-medium text-gray-400 mb-2">Upload Images
+        <input 
+          type="file" 
+          (change)="onFileSelected($event)"
+          accept="image/*"
+          multiple
+          class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-mansory-gold file:text-black hover:file:bg-mansory-gold/90"
+        />
+        </label>
+        @if (selectedImages.length > 0) {
+          <p class="text-sm text-gray-400 mt-2">{{ selectedImages.length }} file(s) selected</p>
+        }
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex justify-end space-x-4 pt-6">
+      <button 
+        type="button"
+        (click)="cancel()"
+        class="btn-luxury-outline px-8 py-3"
+      >
+        Cancel
+      </button>
+      <button 
+        type="submit"
+        [disabled]="isLoading()"
+        class="btn-luxury px-8 py-3 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+      >
+        @if (isLoading()) {
+          <svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span>Saving...</span>
+        } @else {
+          <span>{{ car ? 'Update Car' : 'Create Car' }}</span>
+        }
+      </button>
+    </div>
+  </form>
+</div>
