@@ -1,1 +1,175 @@
-<p>home works!</p>
+<!-- Hero Section -->
+<section class="relative h-screen flex items-center justify-center overflow-hidden">
+  <!-- Background Image with Overlay -->
+  <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black">
+    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1619405399517-d7fce0f13302?q=80&w=2340')] bg-cover bg-center opacity-40"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 text-center px-4 animate-fade-in">
+    <h1 class="text-5xl md:text-7xl lg:text-8xl font-heading font-bold text-white mb-6 tracking-tight">
+      LUXURY
+      <span class="text-mansory-gold block mt-2">REDEFINED</span>
+    </h1>
+    
+    <div class="gold-line mx-auto my-8"></div>
+    
+    <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
+      Experience automotive excellence with bespoke customization and unparalleled performance
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a routerLink="/cars" class="btn-luxury">
+        Explore Collection
+      </a>
+      <a href="#featured" class="btn-luxury-outline">
+        View Featured
+      </a>
+    </div>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+    <svg class="w-6 h-6 text-mansory-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+    </svg>
+  </div>
+</section>
+
+<!-- Brands Section -->
+<section class="section-padding bg-mansory-gray">
+  <div class="container-custom">
+    <div class="text-center mb-16 animate-slide-up">
+      <h2 class="text-4xl md:text-5xl font-heading font-bold text-white mb-4">
+        Premium <span class="text-mansory-gold">Brands</span>
+      </h2>
+      <div class="gold-line"></div>
+      <p class="text-gray-400 max-w-2xl mx-auto mt-6">
+        Discover our exclusive collection from the world's most prestigious automotive manufacturers
+      </p>
+    </div>
+
+    @if (brands().length > 0) {
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        @for (brand of brands(); track brand.id) {
+          <a [routerLink]="['/cars']" [queryParams]="{brand_id: brand.id}"
+             class="group bg-mansory-light-gray p-8 rounded-sm hover:bg-mansory-gold/10 transition-all duration-300 border border-transparent hover:border-mansory-gold">
+            <div class="text-center">
+              <h3 class="text-white font-semibold text-lg group-hover:text-mansory-gold transition-colors uppercase tracking-wider">
+                {{ brand.name }}
+              </h3>
+              @if (brand.cars_count) {
+                <p class="text-gray-400 text-sm mt-2">{{ brand.cars_count }} Cars</p>
+              }
+            </div>
+          </a>
+        }
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Featured Cars Section -->
+<section id="featured" class="section-padding bg-mansory-black">
+  <div class="container-custom">
+    <div class="text-center mb-16 animate-slide-up">
+      <h2 class="text-4xl md:text-5xl font-heading font-bold text-white mb-4">
+        Featured <span class="text-mansory-gold">Collection</span>
+      </h2>
+      <div class="gold-line"></div>
+      <p class="text-gray-400 max-w-2xl mx-auto mt-6">
+        Handpicked masterpieces showcasing the pinnacle of automotive engineering and design
+      </p>
+    </div>
+
+    @if (isLoading()) {
+      <app-loader />
+    } @else if (featuredCars().length > 0) {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in">
+        @for (car of featuredCars(); track car.id) {
+          <app-car-card [car]="car" />
+        }
+      </div>
+
+      <div class="text-center mt-12">
+        <a routerLink="/cars" class="btn-luxury">
+          View All Cars
+        </a>
+      </div>
+    } @else {
+      <div class="text-center py-20">
+        <p class="text-gray-400 text-lg">No featured cars available at the moment</p>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="section-padding bg-mansory-gray">
+  <div class="container-custom">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-heading font-bold text-white mb-4">
+        Why Choose <span class="text-mansory-gold">Mansory</span>
+      </h2>
+      <div class="gold-line"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <!-- Feature 1 -->
+      <div class="text-center group">
+        <div class="w-20 h-20 mx-auto mb-6 bg-mansory-gold/10 rounded-full flex items-center justify-center border-2 border-mansory-gold group-hover:bg-mansory-gold transition-all duration-300">
+          <svg class="w-10 h-10 text-mansory-gold group-hover:text-black transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-heading font-semibold text-white mb-3">Bespoke Customization</h3>
+        <p class="text-gray-400 leading-relaxed">
+          Every detail tailored to your exact specifications, creating a truly unique automotive masterpiece
+        </p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="text-center group">
+        <div class="w-20 h-20 mx-auto mb-6 bg-mansory-gold/10 rounded-full flex items-center justify-center border-2 border-mansory-gold group-hover:bg-mansory-gold transition-all duration-300">
+          <svg class="w-10 h-10 text-mansory-gold group-hover:text-black transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-heading font-semibold text-white mb-3">Performance Excellence</h3>
+        <p class="text-gray-400 leading-relaxed">
+          Advanced engineering solutions delivering extraordinary power and unmatched driving dynamics
+        </p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="text-center group">
+        <div class="w-20 h-20 mx-auto mb-6 bg-mansory-gold/10 rounded-full flex items-center justify-center border-2 border-mansory-gold group-hover:bg-mansory-gold transition-all duration-300">
+          <svg class="w-10 h-10 text-mansory-gold group-hover:text-black transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-heading font-semibold text-white mb-3">Exclusive Luxury</h3>
+        <p class="text-gray-400 leading-relaxed">
+          Premium materials and meticulous craftsmanship ensuring the highest standards of luxury
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section-padding bg-gradient-to-r from-mansory-gold/10 to-transparent">
+  <div class="container-custom">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-4xl md:text-5xl font-heading font-bold text-white mb-6">
+        Ready to Experience <span class="text-mansory-gold">Excellence?</span>
+      </h2>
+      <p class="text-gray-300 text-lg mb-8">
+        Discover your dream car from our exclusive collection
+      </p>
+      <a routerLink="/cars" class="btn-luxury text-base px-12 py-4">
+        Browse Collection
+      </a>
+    </div>
+  </div>
+</section>
