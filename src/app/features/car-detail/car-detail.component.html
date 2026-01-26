@@ -27,7 +27,7 @@
             @if (selectedImage()) {
               <img 
                 [src]="getImageUrl(selectedImage()!)" 
-                [alt]="car()!.name"
+                alt="car()!.name"
                 class="w-full h-full object-cover"
               />
             } @else {
@@ -55,7 +55,7 @@
                 >
                   <img 
                     [src]="getImageUrl(image)" 
-                    [alt]="car()!.name"
+                    alt="car()!.name"
                     class="w-full h-full object-cover"
                   />
                 </button>
