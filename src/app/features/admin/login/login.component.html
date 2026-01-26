@@ -1,1 +1,87 @@
-<p>login works!</p>
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-mansory-black via-mansory-gray to-mansory-black px-4">
+  <div class="max-w-md w-full">
+    <!-- Logo & Title -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-heading font-bold text-white mb-2">
+        <span class="text-mansory-gold">MANSORY</span> Admin
+      </h1>
+      <div class="gold-line mx-auto"></div>
+      <p class="text-gray-400 mt-4">Sign in to manage your collection</p>
+    </div>
+
+    <!-- Login Form -->
+    <div class="bg-mansory-gray p-8 rounded-sm border border-mansory-light-gray shadow-2xl">
+      <form (ngSubmit)="login()" class="space-y-6">
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-400 mb-2">
+            Email Address
+          </label>
+          <input
+            id="email"
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            required
+            class="w-full px-4 py-3 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none transition-colors"
+            placeholder="admin@mansory.com"
+          />
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-400 mb-2">
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            required
+            class="w-full px-4 py-3 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none transition-colors"
+            placeholder="••••••••"
+          />
+        </div>
+
+        <!-- Error Message -->
+        @if (errorMessage()) {
+          <div class="bg-red-500/10 border border-red-500 text-red-400 px-4 py-3 rounded text-sm">
+            {{ errorMessage() }}
+          </div>
+        }
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          [disabled]="isLoading()"
+          class="w-full btn-luxury py-3 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+        >
+          @if (isLoading()) {
+            <svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span>Signing in...</span>
+          } @else {
+            <span>Sign In</span>
+          }
+        </button>
+      </form>
+
+      <!-- Demo Credentials -->
+      <div class="mt-6 pt-6 border-t border-mansory-light-gray">
+        <p class="text-xs text-gray-500 text-center">
+          Demo: admin@mansory.com / admin123
+        </p>
+      </div>
+    </div>
+
+    <!-- Back to Home -->
+    <div class="text-center mt-6">
+      <a routerLink="/home" class="text-gray-400 hover:text-mansory-gold transition-colors text-sm">
+        ← Back to Home
+      </a>
+    </div>
+  </div>
+</div>
