@@ -119,4 +119,8 @@ export class DashboardComponent implements OnInit {
       default: return 'bg-gray-500/20 text-gray-400';
     }
   }
+
+  getAvailableCarsCount(): number {
+    return this.cars().filter(car => car.status === 'available').length;
+  }
 }
