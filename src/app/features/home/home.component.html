@@ -20,7 +20,7 @@
         </div>
 
         <!-- Content -->
-        <div class="relative z-10 h-full flex items-center justify-center px-4">
+        <div class="relative z-10 h-full flex items-center justify-left px-4">
           <div class="text-center max-w-4xl">
             <!-- Brand -->
             @if (car.brand) {
@@ -34,7 +34,7 @@
               {{ car.name }}
             </h1>
 
-            <div class="gold-line mx-auto my-6"></div>
+            
 
             <!-- Description -->
             @if (car.description) {
@@ -42,25 +42,6 @@
                 {{ car.description }}
               </p>
             }
-
-            <!-- Specs Quick View -->
-            <div class="flex flex-wrap justify-center gap-6 mb-8 text-sm md:text-base">
-              @if (car.power_hp) {
-                <div class="text-gray-300">
-                  <span class="text-mansory-gold font-semibold">{{ car.power_hp }}</span> HP
-                </div>
-              }
-              @if (car.v_max) {
-                <div class="text-gray-300">
-                  <span class="text-mansory-gold font-semibold">{{ car.v_max }}</span> km/h
-                </div>
-              }
-              @if (car.acceleration) {
-                <div class="text-gray-300">
-                  0-100: <span class="text-mansory-gold font-semibold">{{ car.acceleration }}s</span>
-                </div>
-              }
-            </div>
 
             <!-- Discover Button -->
             <a 
@@ -74,26 +55,8 @@
       </div>
     }
 
-    <!-- Navigation Arrows -->
-    <button 
-      (click)="prevSlide()"
-      class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-mansory-gold/10 backdrop-blur-sm border border-mansory-gold rounded-full flex items-center justify-center text-mansory-gold hover:bg-mansory-gold hover:text-black transition-all duration-300"
-    >
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-      </svg>
-    </button>
 
-    <button 
-      (click)="nextSlide()"
-      class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-mansory-gold/10 backdrop-blur-sm border border-mansory-gold rounded-full flex items-center justify-center text-mansory-gold hover:bg-mansory-gold hover:text-black transition-all duration-300"
-    >
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-      </svg>
-    </button>
-
-    <!-- Dots Indicator -->
+    
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
       @for (car of sliderCars(); track car.id; let i = $index) {
         <button 
@@ -101,7 +64,7 @@
           class="w-2 h-2 rounded-full transition-all duration-300"
           [class.bg-mansory-gold]="currentSlide() === i"
           [class.w-8]="currentSlide() === i"
-          [class.bg-white/40]="currentSlide() !== i"
+          [class.bg-gray-500]="currentSlide() !== i"
         ></button>
       }
     </div>
@@ -124,12 +87,7 @@
     </div>
   }
 
-  <!-- Scroll Indicator -->
-  <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
-    <svg class="w-6 h-6 text-mansory-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-    </svg>
-  </div>
+  
 </section>
 
 <!-- Brands Section -->
