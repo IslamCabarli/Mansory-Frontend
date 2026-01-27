@@ -8,11 +8,12 @@ import { Car } from '../../../core/models/car.model';
 import { Brand } from '../../../core/models/brand.model';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 import { CarFormComponent } from '../car-form/car-form.component';
+import { CarImagesComponent } from '../car-images/car-images.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, LoaderComponent, CarFormComponent],
+  imports: [CommonModule, RouterLink, LoaderComponent, CarFormComponent, CarImagesComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -20,7 +21,7 @@ export class DashboardComponent implements OnInit {
   cars = signal<Car[]>([]);
   brands = signal<Brand[]>([]);
   isLoading = signal(true);
-  activeView = signal<'list' | 'create' | 'edit'>('list');
+  activeView = signal<'list' | 'create' | 'edit' | 'images'>('list');
   selectedCar = signal<Car | null>(null);
 
   constructor(
@@ -74,6 +75,11 @@ export class DashboardComponent implements OnInit {
   showEditForm(car: Car): void {
     this.selectedCar.set(car);
     this.activeView.set('edit');
+  }
+
+  showImagesForm(car: Car): void {
+    this.selectedCar.set(car);
+    this.activeView.set('images');
   }
 
   cancelForm(): void {
