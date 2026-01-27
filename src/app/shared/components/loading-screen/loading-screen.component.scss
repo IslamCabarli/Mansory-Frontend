@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fadeOut 0.5s ease-out 0.5s forwards;
+  animation: fadeOut 0.5s ease-out 2.5s forwards;
 }
 
 .loading-content {
@@ -54,7 +54,7 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, #D4AF37, #FFD700);
-  animation: loadingProgress 1s ease-in-out;
+  animation: loadingProgress 2.5s ease-in-out;
   transform-origin: left;
 }
 
@@ -88,7 +88,6 @@
   }
 }
 
-// Responsive
 @media (max-width: 768px) {
   .loading-logo {
     font-size: 2.5rem;

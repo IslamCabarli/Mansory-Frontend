@@ -12,9 +12,9 @@ export class LoadingScreenComponent implements OnInit {
   isVisible = signal(true);
 
   ngOnInit(): void {
-    // 1 saniyə sonra gizlət
+   
     setTimeout(() => {
       this.isVisible.set(false);
-    }, 1000);
+    }, 3000);
   }
 }
