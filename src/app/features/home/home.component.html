@@ -1,35 +1,131 @@
-<!-- Hero Section -->
-<section class="relative h-screen flex items-center justify-center overflow-hidden">
-  <!-- Background Image with Overlay -->
-  <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black">
-    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1619405399517-d7fce0f13302?q=80&w=2340')] bg-cover bg-center opacity-40"></div>
-  </div>
+<!-- Hero Slider Section -->
+<section class="relative h-screen overflow-hidden">
+  @if (sliderCars().length > 0) {
+    <!-- Slides -->
+    @for (car of sliderCars(); track car.id; let i = $index) {
+      <div 
+        class="absolute inset-0 transition-opacity duration-1000"
+        [class.opacity-100]="currentSlide() === i"
+        [class.opacity-0]="currentSlide() !== i"
+        [class.z-10]="currentSlide() === i"
+        [class.z-0]="currentSlide() !== i"
+      >
+        <!-- Background Image -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black">
+          <img 
+            [src]="getCarImage(car)" 
+            [alt]="car.name"
+            class="w-full h-full object-cover opacity-40"
+          />
+        </div>
 
-  <!-- Content -->
-  <div class="relative z-10 text-center px-4 animate-fade-in">
-    <h1 class="text-5xl md:text-7xl lg:text-8xl font-heading font-bold text-white mb-6 tracking-tight">
-      LUXURY
-      <span class="text-mansory-gold block mt-2">REDEFINED</span>
-    </h1>
-    
-    <div class="gold-line mx-auto my-8"></div>
-    
-    <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
-      Experience automotive excellence with bespoke customization and unparalleled performance
-    </p>
+        <!-- Content -->
+        <div class="relative z-10 h-full flex items-center justify-center px-4">
+          <div class="text-center max-w-4xl">
+            <!-- Brand -->
+            @if (car.brand) {
+              <p class="text-mansory-gold text-sm md:text-lg font-semibold uppercase tracking-widest mb-4 animate-fade-in">
+                {{ car.brand.name }}
+              </p>
+            }
 
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a routerLink="/cars" class="btn-luxury">
-        Explore Collection
-      </a>
-      <a href="#featured" class="btn-luxury-outline">
-        View Featured
-      </a>
+            <!-- Car Name -->
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-white mb-6 animate-slide-up">
+              {{ car.name }}
+            </h1>
+
+            <div class="gold-line mx-auto my-6"></div>
+
+            <!-- Description -->
+            @if (car.description) {
+              <p class="text-gray-300 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed animate-fade-in line-clamp-3">
+                {{ car.description }}
+              </p>
+            }
+
+            <!-- Specs Quick View -->
+            <div class="flex flex-wrap justify-center gap-6 mb-8 text-sm md:text-base">
+              @if (car.power_hp) {
+                <div class="text-gray-300">
+                  <span class="text-mansory-gold font-semibold">{{ car.power_hp }}</span> HP
+                </div>
+              }
+              @if (car.v_max) {
+                <div class="text-gray-300">
+                  <span class="text-mansory-gold font-semibold">{{ car.v_max }}</span> km/h
+                </div>
+              }
+              @if (car.acceleration) {
+                <div class="text-gray-300">
+                  0-100: <span class="text-mansory-gold font-semibold">{{ car.acceleration }}s</span>
+                </div>
+              }
+            </div>
+
+            <!-- Discover Button -->
+            <a 
+              [routerLink]="['/cars', car.id]" 
+              class="btn-luxury inline-block animate-scale-in"
+            >
+              Discover Now
+            </a>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Navigation Arrows -->
+    <button 
+      (click)="prevSlide()"
+      class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-mansory-gold/10 backdrop-blur-sm border border-mansory-gold rounded-full flex items-center justify-center text-mansory-gold hover:bg-mansory-gold hover:text-black transition-all duration-300"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+    </button>
+
+    <button 
+      (click)="nextSlide()"
+      class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-mansory-gold/10 backdrop-blur-sm border border-mansory-gold rounded-full flex items-center justify-center text-mansory-gold hover:bg-mansory-gold hover:text-black transition-all duration-300"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+    <!-- Dots Indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+      @for (car of sliderCars(); track car.id; let i = $index) {
+        <button 
+          (click)="goToSlide(i)"
+          class="w-2 h-2 rounded-full transition-all duration-300"
+          [class.bg-mansory-gold]="currentSlide() === i"
+          [class.w-8]="currentSlide() === i"
+          [class.bg-white/40]="currentSlide() !== i"
+        ></button>
+      }
     </div>
-  </div>
+  } @else {
+    <!-- Fallback əgər car yoxdursa -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black">
+      <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1619405399517-d7fce0f13302?q=80&w=2340')] bg-cover bg-center opacity-40"></div>
+    </div>
+    <div class="relative z-10 h-full flex items-center justify-center px-4">
+      <div class="text-center">
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-heading font-bold text-white mb-6">
+          LUXURY <span class="text-mansory-gold block mt-2">REDEFINED</span>
+        </h1>
+        <div class="gold-line mx-auto my-8"></div>
+        <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-12">
+          Experience automotive excellence with bespoke customization
+        </p>
+        <a routerLink="/cars" class="btn-luxury">Explore Collection</a>
+      </div>
+    </div>
+  }
 
   <!-- Scroll Indicator -->
-  <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+  <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
     <svg class="w-6 h-6 text-mansory-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
     </svg>
