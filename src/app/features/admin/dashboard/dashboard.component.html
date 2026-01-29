@@ -1,26 +1,4 @@
 <div class="min-h-screen bg-mansory-black">
-  <!-- Admin Header -->
-  <div class="bg-mansory-gray border-b border-mansory-light-gray">
-    <div class="container-custom py-6">
-      <div class="flex justify-between items-center">
-        <div>
-          <h1 class="text-3xl font-heading font-bold text-white mb-1">
-            Admin <span class="text-mansory-gold">Dashboard</span>
-          </h1>
-          <p class="text-gray-400 text-sm">Welcome back, {{ authService.currentUser()?.name }}</p>
-        </div>
-        <div class="flex items-center space-x-4">
-          <a routerLink="/home" class="text-gray-400 hover:text-white transition-colors text-sm">
-            View Site
-          </a>
-          <button (click)="authService.logout()" class="btn-luxury-outline py-2 px-6 text-xs">
-            Logout
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="container-custom py-8">
     <!-- LIST VIEW -->
     @if (activeView() === 'list') {
