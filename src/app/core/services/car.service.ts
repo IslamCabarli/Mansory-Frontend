@@ -78,4 +78,7 @@ export class CarService {
     if (!path) return 'assets/images/placeholder-car.jpg';
     return `${environment.imageUrl}/${path}`;
   }
+
+
+  
 }

@@ -129,4 +129,8 @@ export class DashboardComponent implements OnInit {
   getAvailableCarsCount(): number {
     return this.cars().filter(car => car.status === 'available').length;
   }
+
+  onImagesUpdated(): void {
+  this.loadData();
+}
 }
