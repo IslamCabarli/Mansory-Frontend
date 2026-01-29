@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit, signal } from '@angular
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CarService } from '../../../core/services/car.service';
-import { Car } from '../../../core/models/car.model';
+import { Car, CarSpecification } from '../../../core/models/car.model';
 import { Brand } from '../../../core/models/brand.model';
 
 @Component({
@@ -21,6 +21,7 @@ export class CarFormComponent implements OnInit {
   isLoading = signal(false);
   errorMessage = signal('');
   selectedImages: File[] = [];
+
 
   formData = {
     brand_id: 0,
@@ -72,7 +73,7 @@ export class CarFormComponent implements OnInit {
         doors: this.car.doors || 2,
         seats: this.car.seats || 2,
         is_featured: this.car.is_featured
-      };
+      }   
     }
   }
 
@@ -82,6 +83,7 @@ export class CarFormComponent implements OnInit {
       this.selectedImages = Array.from(files);
     }
   }
+
 
   submit(): void {
     this.errorMessage.set('');
