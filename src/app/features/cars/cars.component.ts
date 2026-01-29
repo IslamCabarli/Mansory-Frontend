@@ -49,7 +49,7 @@ export class CarsComponent implements OnInit {
   ngOnInit(): void {
     this.loadBrands();
     
-    // Check for query params
+
     this.route.queryParams.subscribe(params => {
       if (params['brand_id']) {
         this.filters.brand_id = +params['brand_id'];
@@ -72,7 +72,6 @@ export class CarsComponent implements OnInit {
   loadCars(): void {
     this.isLoading.set(true);
     
-    // Clean undefined values
     const cleanFilters: any = {};
     Object.keys(this.filters).forEach(key => {
       const value = (this.filters as any)[key];
