@@ -18,21 +18,15 @@
     </div>
   }
 
-  <!-- Form -->
   <form (ngSubmit)="submit()" class="space-y-6">
-    <!-- Basic Info Section -->
+    <!-- Basic Info -->
     <div class="border-b border-mansory-light-gray pb-6">
       <h3 class="text-lg font-semibold text-white mb-4">Basic Information</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Brand -->
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">Brand *</label>
-          <select 
-            [(ngModel)]="formData.brand_id" 
-            name="brand_id"
-            required
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          >
+          <select [(ngModel)]="formData.brand_id" name="brand_id" required
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none">
             <option [value]="0">Select Brand</option>
             @for (brand of brands; track brand.id) {
               <option [value]="brand.id">{{ brand.name }}</option>
@@ -40,81 +34,48 @@
           </select>
         </div>
 
-        <!-- Name -->
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">Car Name *</label>
-          <input 
-            type="text" 
-            [(ngModel)]="formData.name"
-            name="name"
-            required
-            placeholder="Mercedes-Benz S-Class"
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          />
+          <input type="text" [(ngModel)]="formData.name" name="name" required placeholder="Mercedes-Benz S-Class"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"/>
         </div>
 
-        <!-- Status -->
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">Status *</label>
-          <select 
-            [(ngModel)]="formData.status"
-            name="status"
-            required
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          >
+          <select [(ngModel)]="formData.status" name="status" required
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none">
             <option value="available">Available</option>
             <option value="reserved">Reserved</option>
             <option value="sold">Sold</option>
           </select>
         </div>
 
-        <!-- Year -->
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">Registration Year</label>
-          <input 
-            type="text" 
-            [(ngModel)]="formData.registration_year"
-            name="registration_year"
-            placeholder="2023"
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          />
+          <input type="text" [(ngModel)]="formData.registration_year" name="registration_year" placeholder="2023"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"/>
         </div>
 
-        <!-- Price -->
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">Price</label>
-          <input 
-            type="number" 
-            [(ngModel)]="formData.price"
-            name="price"
-            placeholder="150000"
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          />
+          <input type="number" [(ngModel)]="formData.price" name="price" placeholder="150000"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"/>
         </div>
 
-        <!-- Currency -->
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">Currency</label>
-          <select 
-            [(ngModel)]="formData.currency"
-            name="currency"
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          >
+          <select [(ngModel)]="formData.currency" name="currency"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none">
             <option value="EUR">EUR</option>
             <option value="USD">USD</option>
             <option value="GBP">GBP</option>
           </select>
         </div>
 
-        <!-- Featured -->
         <div class="md:col-span-2">
           <label class="flex items-center space-x-3 cursor-pointer">
-            <input 
-              type="checkbox" 
-              [(ngModel)]="formData.is_featured"
-              name="is_featured"
-              class="w-5 h-5 text-mansory-gold bg-mansory-black border-mansory-light-gray rounded focus:ring-mansory-gold focus:ring-2"
-            />
+            <input type="checkbox" [(ngModel)]="formData.is_featured" name="is_featured"
+              class="w-5 h-5 text-mansory-gold bg-mansory-black border-mansory-light-gray rounded focus:ring-mansory-gold focus:ring-2"/>
             <span class="text-white font-medium">Featured Vehicle</span>
           </label>
         </div>
@@ -124,13 +85,8 @@
     <!-- Description -->
     <div class="border-b border-mansory-light-gray pb-6">
       <h3 class="text-lg font-semibold text-white mb-4">Description</h3>
-      <textarea 
-        [(ngModel)]="formData.description"
-        name="description"
-        rows="4"
-        placeholder="Enter car description..."
-        class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-      ></textarea>
+      <textarea [(ngModel)]="formData.description" name="description" rows="4" placeholder="Enter car description..."
+        class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"></textarea>
     </div>
 
     <!-- Technical Specs -->
@@ -139,156 +95,75 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">Mileage (km)</label>
-          <input 
-            type="number" 
-            [(ngModel)]="formData.mileage"
-            name="mileage"
-            placeholder="50000"
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          />
+          <input type="number" [(ngModel)]="formData.mileage" name="mileage" placeholder="50000"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"/>
         </div>
-
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">Body Type</label>
-          <input 
-            type="text" 
-            [(ngModel)]="formData.body_type"
-            name="body_type"
-            placeholder="Sedan, SUV, Coupe"
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          />
+          <input type="text" [(ngModel)]="formData.body_type" name="body_type" placeholder="Sedan, SUV, Coupe"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"/>
         </div>
-
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">Engine</label>
-          <input 
-            type="text" 
-            [(ngModel)]="formData.engine"
-            name="engine"
-            placeholder="V8 Biturbo"
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          />
+          <input type="text" [(ngModel)]="formData.engine" name="engine" placeholder="V8 Biturbo"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"/>
         </div>
-
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">Fuel Type</label>
-          <input 
-            type="text" 
-            [(ngModel)]="formData.fuel_type"
-            name="fuel_type"
-            placeholder="Petrol, Diesel, Electric"
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          />
+          <input type="text" [(ngModel)]="formData.fuel_type" name="fuel_type" placeholder="Petrol, Diesel, Electric"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"/>
         </div>
-
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">Transmission</label>
-          <input 
-            type="text" 
-            [(ngModel)]="formData.transmission"
-            name="transmission"
-            placeholder="Automatic, Manual"
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          />
+          <input type="text" [(ngModel)]="formData.transmission" name="transmission" placeholder="Automatic, Manual"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"/>
         </div>
-
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">Power (HP)</label>
-          <input 
-            type="number" 
-            [(ngModel)]="formData.power_hp"
-            name="power_hp"
-            placeholder="450"
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          />
+          <input type="number" [(ngModel)]="formData.power_hp" name="power_hp" placeholder="450"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"/>
         </div>
-
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">Power (KW)</label>
-          <input 
-            type="number" 
-            [(ngModel)]="formData.power_kw"
-            name="power_kw"
-            placeholder="331"
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          />
+          <input type="number" [(ngModel)]="formData.power_kw" name="power_kw" placeholder="331"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"/>
         </div>
-
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">Top Speed (km/h)</label>
-          <input 
-            type="number" 
-            [(ngModel)]="formData.v_max"
-            name="v_max"
-            placeholder="250"
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          />
+          <input type="number" [(ngModel)]="formData.v_max" name="v_max" placeholder="250"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"/>
         </div>
-
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">0-100 km/h (seconds)</label>
-          <input 
-            type="text" 
-            [(ngModel)]="formData.acceleration"
-            name="acceleration"
-            placeholder="4.5"
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          />
+          <input type="text" [(ngModel)]="formData.acceleration" name="acceleration" placeholder="4.5"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"/>
         </div>
       </div>
     </div>
 
-    <!-- Interior/Exterior -->
+    <!-- Colors & Details -->
     <div class="border-b border-mansory-light-gray pb-6">
       <h3 class="text-lg font-semibold text-white mb-4">Colors & Details</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">Exterior Color</label>
-          <input 
-            type="text" 
-            [(ngModel)]="formData.color_exterior"
-            name="color_exterior"
-            placeholder="Matte Black"
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          />
+          <input type="text" [(ngModel)]="formData.color_exterior" name="color_exterior" placeholder="Matte Black"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"/>
         </div>
-
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">Interior Color</label>
-          <input 
-            type="text" 
-            [(ngModel)]="formData.color_interior"
-            name="color_interior"
-            placeholder="Black Leather"
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          />
+          <input type="text" [(ngModel)]="formData.color_interior" name="color_interior" placeholder="Black Leather"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"/>
         </div>
-
         <div>
-          <label class="block text-sm font-medium text-gray-400 mb-2">Doors
-          <input 
-            type="number" 
-            [(ngModel)]="formData.doors"
-            name="doors"
-            min="2"
-            max="5"
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          />
-          </label>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Doors</label>
+          <input type="number" [(ngModel)]="formData.doors" name="doors" min="2" max="5"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"/>
         </div>
-
         <div>
-          <label class="block text-sm font-medium text-gray-400 mb-2">Seats
-          <input
-          
-            type="number" 
-            [(ngModel)]="formData.seats"
-            name="seats"
-            min="2"
-            max="9"
-            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"
-          />
-          </label>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Seats</label>
+          <input type="number" [(ngModel)]="formData.seats" name="seats" min="2" max="9"
+            class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none"/>
         </div>
       </div>
     </div>
@@ -296,36 +171,119 @@
     <!-- Images -->
     <div class="border-b border-mansory-light-gray pb-6">
       <h3 class="text-lg font-semibold text-white mb-4">Images</h3>
-      <div>
-        <label class="block text-sm font-medium text-gray-400 mb-2">Upload Images
-        <input 
-          type="file" 
-          (change)="onFileSelected($event)"
-          accept="image/*"
-          multiple
-          class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-mansory-gold file:text-black hover:file:bg-mansory-gold/90"
-        />
-        </label>
-        @if (selectedImages.length > 0) {
-          <p class="text-sm text-gray-400 mt-2">{{ selectedImages.length }} file(s) selected</p>
-        }
-      </div>
+      <label class="block text-sm font-medium text-gray-400 mb-2">Upload Images</label>
+      <input type="file" (change)="onFileSelected($event)" accept="image/*" multiple
+        class="w-full px-4 py-2 bg-mansory-black border border-mansory-light-gray text-white rounded focus:border-mansory-gold focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-mansory-gold file:text-black hover:file:bg-mansory-gold/90"/>
+      @if (selectedImages.length > 0) {
+        <p class="text-sm text-gray-400 mt-2">{{ selectedImages.length }} file(s) selected</p>
+      }
     </div>
+
+    <!-- ===== SPECIFICATIONS SECTION ===== -->
+    <div class="border-b border-mansory-light-gray pb-6">
+      <h3 class="text-lg font-semibold text-white mb-4">Additional Specifications</h3>
+
+      <!-- Add New Spec Form -->
+      <div class="mb-6 p-4 bg-mansory-black rounded border border-mansory-light-gray">
+        <h4 class="text-white font-medium mb-4">Add New Specification</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 mb-3">
+          <div>
+            <label class="block text-gray-400 text-xs mb-1">Label *</label>
+            <input type="text" [(ngModel)]="newSpec.spec_label" [ngModelOptions]="{standalone: true}" placeholder="e.g., Top Speed"
+              class="w-full px-3 py-2 bg-mansory-gray border border-mansory-light-gray text-white text-sm rounded focus:border-mansory-gold focus:outline-none"/>
+          </div>
+          <div>
+            <label class="block text-gray-400 text-xs mb-1">Value *</label>
+            <input type="text" [(ngModel)]="newSpec.spec_value" [ngModelOptions]="{standalone: true}" placeholder="e.g., 320"
+              class="w-full px-3 py-2 bg-mansory-gray border border-mansory-light-gray text-white text-sm rounded focus:border-mansory-gold focus:outline-none"/>
+          </div>
+          <div>
+            <label class="block text-gray-400 text-xs mb-1">Unit</label>
+            <input type="text" [(ngModel)]="newSpec.spec_unit" [ngModelOptions]="{standalone: true}" placeholder="e.g., km/h"
+              class="w-full px-3 py-2 bg-mansory-gray border border-mansory-light-gray text-white text-sm rounded focus:border-mansory-gold focus:outline-none"/>
+          </div>
+          <div>
+            <label class="block text-gray-400 text-xs mb-1">Category</label>
+            <select [(ngModel)]="newSpec.spec_category" [ngModelOptions]="{standalone: true}"
+              class="w-full px-3 py-2 bg-mansory-gray border border-mansory-light-gray text-white text-sm rounded focus:border-mansory-gold focus:outline-none">
+              @for (cat of specCategories; track cat.value) {
+                <option [value]="cat.value">{{ cat.label }}</option>
+              }
+            </select>
+          </div>
+          <div class="flex items-end">
+            <button type="button" (click)="addSpecification()"
+              class="w-full bg-mansory-gold hover:bg-mansory-gold/90 text-black font-medium py-2 px-4 rounded transition-colors text-sm">
+              Add
+            </button>
+          </div>
+        </div>
+        <p class="text-gray-500 text-xs">* Required fields</p>
+      </div>
+
+      <!-- Existing Specifications grouped by category -->
+      @if (specifications().length > 0) {
+        <div class="space-y-3">
+          @for (cat of specCategories; track cat.value) {
+            @if (getSpecsByCategory(cat.value).length > 0) {
+              <div class="bg-mansory-black rounded border border-mansory-light-gray p-3">
+                <h5 class="text-mansory-gold font-semibold mb-2 uppercase text-xs tracking-wider">{{ cat.label }}</h5>
+                <div class="space-y-2">
+                  @for (spec of getSpecsByCategory(cat.value); track spec.spec_label + spec.spec_value) {
+                    @let idx = specifications().findIndex(s => s === spec);
+                    <div class="flex items-center justify-between bg-mansory-gray rounded p-2 group border border-transparent hover:border-mansory-light-gray transition-colors">
+                      <div class="flex items-center space-x-2 text-sm">
+                        <span class="text-white font-medium">{{ spec.spec_label }}:</span>
+                        <span class="text-gray-300">{{ spec.spec_value }}</span>
+                        @if (spec.spec_unit) {
+                          <span class="text-gray-500">{{ spec.spec_unit }}</span>
+                        }
+                      </div>
+                      <!-- Up / Down / Delete -->
+                      <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button type="button" (click)="moveSpecUp(idx)" [disabled]="idx === 0"
+                          class="text-blue-400 hover:text-blue-300 disabled:opacity-30 disabled:cursor-not-allowed p-1" title="Move Up">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                          </svg>
+                        </button>
+                        <button type="button" (click)="moveSpecDown(idx)" [disabled]="idx === specifications().length - 1"
+                          class="text-blue-400 hover:text-blue-300 disabled:opacity-30 disabled:cursor-not-allowed p-1" title="Move Down">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                          </svg>
+                        </button>
+                        <button type="button" (click)="removeSpecification(idx)"
+                          class="text-red-400 hover:text-red-300 p-1" title="Remove">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          }
+        </div>
+      } @else {
+        <div class="text-center py-6 bg-mansory-black rounded border border-mansory-light-gray">
+          <svg class="w-10 h-10 mx-auto mb-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          <p class="text-gray-400 text-sm">No specifications added yet</p>
+          <p class="text-gray-500 text-xs mt-1">Add technical details above</p>
+        </div>
+      }
+    </div>
+  
 
     <!-- Action Buttons -->
     <div class="flex justify-end space-x-4 pt-6">
-      <button 
-        type="button"
-        (click)="cancel()"
-        class="btn-luxury-outline px-8 py-3"
-      >
-        Cancel
-      </button>
-      <button 
-        type="submit"
-        [disabled]="isLoading()"
-        class="btn-luxury px-8 py-3 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
-      >
+      <button type="button" (click)="cancel()" class="btn-luxury-outline px-8 py-3">Cancel</button>
+      <button type="submit" [disabled]="isLoading()"
+        class="btn-luxury px-8 py-3 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2">
         @if (isLoading()) {
           <svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
