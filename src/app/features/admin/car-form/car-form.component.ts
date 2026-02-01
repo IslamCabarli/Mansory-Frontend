@@ -22,6 +22,29 @@ export class CarFormComponent implements OnInit {
   errorMessage = signal('');
   selectedImages: File[] = [];
 
+  // ===== SPECIFICATIONS =====
+  specifications = signal<CarSpecification[]>([]);
+  
+  newSpec = {
+    spec_key: '',
+    spec_label: '',
+    spec_value: '',
+    spec_unit: '',
+    spec_category: 'general',
+    sort_order: 0
+  };
+
+  specCategories = [
+    { value: 'general', label: 'General' },
+    { value: 'performance', label: 'Performance' },
+    { value: 'engine', label: 'Engine' },
+    { value: 'dimensions', label: 'Dimensions' },
+    { value: 'interior', label: 'Interior' },
+    { value: 'exterior', label: 'Exterior' },
+    { value: 'safety', label: 'Safety' },
+    { value: 'technology', label: 'Technology' }
+  ];
+  // ===========================
 
   formData = {
     brand_id: 0,
@@ -73,7 +96,12 @@ export class CarFormComponent implements OnInit {
         doors: this.car.doors || 2,
         seats: this.car.seats || 2,
         is_featured: this.car.is_featured
-      }   
+      };
+
+      // Load existing specifications
+      if (this.car.specifications && this.car.specifications.length > 0) {
+        this.specifications.set([...this.car.specifications]);
+      }
     }
   }
 
@@ -84,6 +112,73 @@ export class CarFormComponent implements OnInit {
     }
   }
 
+  // ===== SPECIFICATIONS METHODS =====
+  addSpecification(): void {
+    if (!this.newSpec.spec_label || !this.newSpec.spec_value) {
+      this.errorMessage.set('Please fill in specification Label and Value');
+      return;
+    }
+
+    if (!this.newSpec.spec_key) {
+      this.newSpec.spec_key = this.newSpec.spec_label
+        .toLowerCase()
+        .replace(/\s+/g, '_')
+        .replace(/[^a-z0-9_]/g, '');
+    }
+
+    const newSpecification: CarSpecification = {
+      id: 0,
+      car_id: this.car?.id || 0,
+      spec_key: this.newSpec.spec_key,
+      spec_label: this.newSpec.spec_label,
+      spec_value: this.newSpec.spec_value,
+      spec_unit: this.newSpec.spec_unit || '',
+      spec_category: this.newSpec.spec_category,
+      sort_order: this.specifications().length,
+      created_at: '',
+      updated_at: ''
+    };
+
+    this.specifications.update(specs => [...specs, newSpecification]);
+    this.errorMessage.set('');
+
+    // Reset
+    this.newSpec = {
+      spec_key: '',
+      spec_label: '',
+      spec_value: '',
+      spec_unit: '',
+      spec_category: 'general',
+      sort_order: 0
+    };
+  }
+
+  removeSpecification(index: number): void {
+    this.specifications.update(specs => specs.filter((_, i) => i !== index));
+  }
+
+  moveSpecUp(index: number): void {
+    if (index === 0) return;
+    this.specifications.update(specs => {
+      const arr = [...specs];
+      [arr[index - 1], arr[index]] = [arr[index], arr[index - 1]];
+      return arr.map((spec, i) => ({ ...spec, sort_order: i }));
+    });
+  }
+
+  moveSpecDown(index: number): void {
+    if (index === this.specifications().length - 1) return;
+    this.specifications.update(specs => {
+      const arr = [...specs];
+      [arr[index], arr[index + 1]] = [arr[index + 1], arr[index]];
+      return arr.map((spec, i) => ({ ...spec, sort_order: i }));
+    });
+  }
+
+  getSpecsByCategory(category: string): CarSpecification[] {
+    return this.specifications().filter(s => s.spec_category === category);
+  }
+  // ===================================
 
   submit(): void {
     this.errorMessage.set('');
@@ -95,12 +190,16 @@ export class CarFormComponent implements OnInit {
 
     this.isLoading.set(true);
 
+    // Specifications daxil edim
+    const carData = {
+      ...this.formData,
+      specifications: this.specifications()
+    };
+
     if (this.car) {
-      // Update existing car
-      this.carService.update(this.car.id, this.formData).subscribe({
+      this.carService.update(this.car.id, carData).subscribe({
         next: (response) => {
           if (response.success) {
-            // Upload images if any
             if (this.selectedImages.length > 0) {
               this.uploadImages(this.car!.id);
             } else {
@@ -116,13 +215,11 @@ export class CarFormComponent implements OnInit {
         }
       });
     } else {
-      // Create new car
-      this.carService.create(this.formData).subscribe({
+      this.carService.create(carData).subscribe({
         next: (response) => {
           if (response.success && !Array.isArray(response.data) && 'id' in response.data) {
             const newCar = response.data as Car;
-            
-            // Upload images if any
+
             if (this.selectedImages.length > 0) {
               this.uploadImages(newCar.id);
             } else {
@@ -142,13 +239,13 @@ export class CarFormComponent implements OnInit {
 
   uploadImages(carId: number): void {
     const formData = new FormData();
-    this.selectedImages.forEach((file, index) => {
+    this.selectedImages.forEach((file) => {
       formData.append('images[]', file, file.name);
     });
     formData.append('image_type', 'gallery');
 
     this.carService.addImages(carId, formData).subscribe({
-      next: (response) => {
+      next: () => {
         this.saved.emit();
         this.isLoading.set(false);
       },

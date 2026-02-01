@@ -41,7 +41,7 @@ export class CarImagesComponent {
         console.log('Images uploaded:', response);
         this.isUploading.set(false);
         this.selectedFiles = [];
-        // Reload car data
+        
         window.location.reload();
       },
       error: (error) => {
