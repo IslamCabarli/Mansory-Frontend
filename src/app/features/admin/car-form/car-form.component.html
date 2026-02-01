@@ -229,8 +229,7 @@
               <div class="bg-mansory-black rounded border border-mansory-light-gray p-3">
                 <h5 class="text-mansory-gold font-semibold mb-2 uppercase text-xs tracking-wider">{{ cat.label }}</h5>
                 <div class="space-y-2">
-                  @for (spec of getSpecsByCategory(cat.value); track spec.spec_label + spec.spec_value) {
-                    @let idx = specifications().findIndex(s => s === spec);
+                @for (spec of getSpecsByCategory(cat.value); track spec.spec_label + spec.spec_value) {
                     <div class="flex items-center justify-between bg-mansory-gray rounded p-2 group border border-transparent hover:border-mansory-light-gray transition-colors">
                       <div class="flex items-center space-x-2 text-sm">
                         <span class="text-white font-medium">{{ spec.spec_label }}:</span>
@@ -241,19 +240,19 @@
                       </div>
                       <!-- Up / Down / Delete -->
                       <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button type="button" (click)="moveSpecUp(idx)" [disabled]="idx === 0"
+                        <button type="button" (click)="moveSpecUp(getGlobalIndex(spec))" [disabled]="getGlobalIndex(spec) === 0"
                           class="text-blue-400 hover:text-blue-300 disabled:opacity-30 disabled:cursor-not-allowed p-1" title="Move Up">
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
                           </svg>
                         </button>
-                        <button type="button" (click)="moveSpecDown(idx)" [disabled]="idx === specifications().length - 1"
+                        <button type="button" (click)="moveSpecDown(getGlobalIndex(spec))" [disabled]="getGlobalIndex(spec) === specifications().length - 1"
                           class="text-blue-400 hover:text-blue-300 disabled:opacity-30 disabled:cursor-not-allowed p-1" title="Move Down">
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                           </svg>
                         </button>
-                        <button type="button" (click)="removeSpecification(idx)"
+                        <button type="button" (click)="removeSpecification(getGlobalIndex(spec))"
                           class="text-red-400 hover:text-red-300 p-1" title="Remove">
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
