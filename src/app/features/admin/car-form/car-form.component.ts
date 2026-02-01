@@ -178,7 +178,10 @@ export class CarFormComponent implements OnInit {
   getSpecsByCategory(category: string): CarSpecification[] {
     return this.specifications().filter(s => s.spec_category === category);
   }
-  // ===================================
+  getGlobalIndex(spec: CarSpecification): number {
+    return this.specifications().indexOf(spec);
+  }
+ 
 
   submit(): void {
     this.errorMessage.set('');
