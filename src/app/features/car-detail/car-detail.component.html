@@ -229,18 +229,41 @@
           <!-- Specifications Tab -->
           @if (activeTab() === 'specs') {
             @if (car()!.specifications && car()!.specifications!.length > 0) {
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                @for (spec of car()!.specifications; track spec.id) {
-                  <div class="flex justify-between items-center py-3 border-b border-mansory-light-gray">
-                    <span class="text-gray-400">{{ spec.spec_label }}</span>
-                    <span class="text-white font-semibold">
-                      {{ spec.spec_value }} @if (spec.spec_unit) {<span class="text-gray-400 text-sm">{{ spec.spec_unit }}</span>}
-                    </span>
-                  </div>
+              <div class="space-y-6">
+                @for (category of specCategories; track category.value) {
+                  @if (getSpecsByCategory(category.value).length > 0) {
+                    <div>
+                      <!-- Category Header -->
+                      <h3 class="text-mansory-gold font-semibold uppercase text-sm tracking-wider mb-4 pb-2 border-b border-mansory-gold/30">
+                        {{ category.label }}
+                      </h3>
+
+                      <!-- Specifications Grid -->
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        @for (spec of getSpecsByCategory(category.value); track spec.id) {
+                          <div class="flex justify-between items-center py-3 px-4 bg-mansory-black rounded border border-mansory-light-gray/50 hover:border-mansory-gold/30 transition-colors">
+                            <span class="text-gray-400 text-sm">{{ spec.spec_label }}</span>
+                            <span class="text-white font-semibold">
+                              {{ spec.spec_value }}
+                              @if (spec.spec_unit) {
+                                <span class="text-gray-400 text-sm ml-1">{{ spec.spec_unit }}</span>
+                              }
+                            </span>
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  }
                 }
               </div>
             } @else {
-              <p class="text-gray-400 text-center py-8">No specifications available</p>
+              <div class="text-center py-12">
+                <svg class="w-16 h-16 mx-auto text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                <p class="text-gray-400 text-lg">No specifications available</p>
+                <p class="text-gray-500 text-sm mt-2">Technical details will be added soon</p>
+              </div>
             }
           }
 
