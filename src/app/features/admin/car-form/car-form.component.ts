@@ -194,7 +194,6 @@ specCategories = [
     }
 
     this.isLoading.set(true);
-
     // Specifications daxil edim
     const carData = {
       ...this.formData,
