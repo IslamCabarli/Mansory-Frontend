@@ -61,8 +61,8 @@ export interface CarSpecification {
   spec_category?: string;
   formatted_value?: string;
   sort_order: number;
-  created_at: string;
-  updated_at: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface CarResponse {

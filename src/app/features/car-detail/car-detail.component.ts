@@ -2,7 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CarService } from '../../core/services/car.service';
-import { Car, CarImage } from '../../core/models/car.model';
+import { Car, CarImage, CarSpecification } from '../../core/models/car.model';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
 
 @Component({
@@ -17,6 +17,20 @@ export class CarDetailComponent implements OnInit {
   isLoading = signal(true);
   selectedImage = signal<CarImage | null>(null);
   activeTab = signal<'overview' | 'specs' | 'features'>('overview');
+
+  // ✅ Specification kateqoriyaları
+  specCategories = [
+    { value: 'general', label: 'General' },
+    { value: 'engine', label: 'Engine' },
+    { value: 'performance', label: 'Performance' },
+    { value: 'economy', label: 'Economy & Efficiency' },
+    { value: 'dimensions', label: 'Dimensions & Wheels' },
+    { value: 'features', label: 'Features & Customization' },
+    { value: 'interior', label: 'Interior' },
+    { value: 'exterior', label: 'Exterior' },
+    { value: 'safety', label: 'Safety' },
+    { value: 'technology', label: 'Technology' }
+  ];
 
   constructor(
     private route: ActivatedRoute,
@@ -55,6 +69,19 @@ export class CarDetailComponent implements OnInit {
         this.router.navigate(['/cars']);
       }
     });
+  }
+
+  // ✅ Kateqoriyaya görə specifications al
+  getSpecsByCategory(category: string): CarSpecification[] {
+    const car = this.car();
+    if (!car || !car.specifications) return [];
+    return car.specifications.filter(s => s.spec_category === category);
+  }
+
+  // ✅ Category label-ı al
+  getCategoryLabel(category: string): string {
+    const cat = this.specCategories.find(c => c.value === category);
+    return cat ? cat.label : category;
   }
 
   getImageUrl(image: CarImage): string {

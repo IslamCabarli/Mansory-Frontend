@@ -46,7 +46,7 @@ specCategories = [
     { value: 'safety', label: 'Safety' },
     { value: 'technology', label: 'Technology' }
   ];
-  // ===========================
+
 
   formData = {
     brand_id: 0,
@@ -134,8 +134,8 @@ specCategories = [
       spec_key: this.newSpec.spec_key,
       spec_label: this.newSpec.spec_label,
       spec_value: this.newSpec.spec_value,
-      spec_unit: this.newSpec.spec_unit || '',
-      spec_category: this.newSpec.spec_category,
+      spec_unit: this.newSpec.spec_unit || undefined,
+      spec_category: this.newSpec.spec_category || 'general',
       sort_order: this.specifications().length,
       created_at: '',
       updated_at: ''
