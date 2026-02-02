@@ -34,11 +34,13 @@ export class CarFormComponent implements OnInit {
     sort_order: 0
   };
 
-  specCategories = [
+specCategories = [
     { value: 'general', label: 'General' },
-    { value: 'performance', label: 'Performance' },
     { value: 'engine', label: 'Engine' },
-    { value: 'dimensions', label: 'Dimensions' },
+    { value: 'performance', label: 'Performance' },
+    { value: 'economy', label: 'Economy & Efficiency' },
+    { value: 'dimensions', label: 'Dimensions & Wheels' },
+    { value: 'features', label: 'Features & Customization' },
     { value: 'interior', label: 'Interior' },
     { value: 'exterior', label: 'Exterior' },
     { value: 'safety', label: 'Safety' },
