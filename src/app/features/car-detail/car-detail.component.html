@@ -5,13 +5,13 @@
 } @else if (car()) {
   <!-- Breadcrumb -->
   <div class="bg-mansory-gray border-b border-mansory-light-gray">
-    <div class="container-custom py-4">
-      <div class="flex items-center space-x-2 text-sm text-gray-400">
+    <div class="container-custom py-3 md:py-4">
+      <div class="flex items-center flex-wrap gap-1 text-xs sm:text-sm text-gray-400">
         <a routerLink="/home" class="hover:text-mansory-gold transition-colors">Home</a>
         <span>/</span>
         <a routerLink="/cars" class="hover:text-mansory-gold transition-colors">Cars</a>
         <span>/</span>
-        <span class="text-white">{{ car()!.name }}</span>
+        <span class="text-white truncate max-w-[180px] sm:max-w-none">{{ car()!.name }}</span>
       </div>
     </div>
   </div>
@@ -19,11 +19,11 @@
   <!-- Main Content -->
   <section class="section-padding bg-mansory-black">
     <div class="container-custom">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         <!-- Image Gallery -->
         <div>
           <!-- Main Image -->
-          <div class="relative aspect-[4/3] bg-mansory-gray rounded-sm overflow-hidden mb-4">
+          <div class="relative aspect-[4/3] bg-mansory-gray rounded-sm overflow-hidden mb-3 md:mb-4">
             @if (selectedImage()) {
               <img 
                 [src]="getImageUrl(selectedImage()!)" 
@@ -32,12 +32,12 @@
               />
             } @else {
               <div class="w-full h-full flex items-center justify-center">
-                <span class="text-gray-600">No image available</span>
+                <span class="text-gray-600 text-sm">No image available</span>
               </div>
             }
 
             <!-- Status Badge -->
-            <div class="absolute top-4 right-4 px-4 py-2 rounded-full text-sm font-semibold uppercase tracking-wider border backdrop-blur-sm"
+            <div class="absolute top-3 right-3 md:top-4 md:right-4 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider border backdrop-blur-sm"
                  [ngClass]="getStatusBadgeClass()">
               {{ car()!.status }}
             </div>
@@ -45,7 +45,7 @@
 
           <!-- Thumbnail Gallery -->
           @if (car()!.images && car()!.images!.length > 1) {
-            <div class="grid grid-cols-4 gap-4">
+            <div class="grid grid-cols-4 gap-2 md:gap-4">
               @for (image of car()!.images; track image.id) {
                 <button 
                   (click)="selectImage(image)"
@@ -65,68 +65,68 @@
         </div>
 
         <!-- Car Info -->
-        <div>
+        <div class="mt-2 lg:mt-0">
           <!-- Brand -->
           @if (car()!.brand) {
-            <p class="text-mansory-gold text-sm font-semibold uppercase tracking-widest mb-3">
+            <p class="text-mansory-gold text-xs sm:text-sm font-semibold uppercase tracking-widest mb-2 md:mb-3">
               {{ car()!.brand!.name }}
             </p>
           }
 
           <!-- Name -->
-          <h1 class="text-4xl md:text-5xl font-heading font-bold text-white mb-6">
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-white mb-4 md:mb-6 leading-tight">
             {{ car()!.name }}
           </h1>
 
           <!-- Price -->
-          <div class="mb-8">
-            <p class="text-5xl font-heading font-bold text-mansory-gold">
+          <div class="mb-6 md:mb-8">
+            <p class="text-4xl sm:text-5xl font-heading font-bold text-mansory-gold">
               {{ formatPrice() }}
             </p>
           </div>
 
           <!-- Key Specs Grid -->
-          <div class="grid grid-cols-2 gap-6 mb-8 p-6 bg-mansory-gray rounded-sm border border-mansory-light-gray">
+          <div class="grid grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8 p-4 md:p-6 bg-mansory-gray rounded-sm border border-mansory-light-gray">
             @if (car()!.registration_year) {
               <div>
-                <p class="text-gray-400 text-sm mb-1">Year</p>
-                <p class="text-white font-semibold text-lg">{{ car()!.registration_year }}</p>
+                <p class="text-gray-400 text-xs sm:text-sm mb-1">Year</p>
+                <p class="text-white font-semibold text-base sm:text-lg">{{ car()!.registration_year }}</p>
               </div>
             }
             @if (car()!.mileage) {
               <div>
-                <p class="text-gray-400 text-sm mb-1">Mileage</p>
-                <p class="text-white font-semibold text-lg">{{ car()!.mileage | number }} km</p>
+                <p class="text-gray-400 text-xs sm:text-sm mb-1">Mileage</p>
+                <p class="text-white font-semibold text-base sm:text-lg">{{ car()!.mileage | number }} km</p>
               </div>
             }
             @if (car()!.power_hp) {
               <div>
-                <p class="text-gray-400 text-sm mb-1">Power</p>
-                <p class="text-white font-semibold text-lg">{{ car()!.power_hp }} HP</p>
+                <p class="text-gray-400 text-xs sm:text-sm mb-1">Power</p>
+                <p class="text-white font-semibold text-base sm:text-lg">{{ car()!.power_hp }} HP</p>
               </div>
             }
             @if (car()!.v_max) {
               <div>
-                <p class="text-gray-400 text-sm mb-1">Top Speed</p>
-                <p class="text-white font-semibold text-lg">{{ car()!.v_max }} km/h</p>
+                <p class="text-gray-400 text-xs sm:text-sm mb-1">Top Speed</p>
+                <p class="text-white font-semibold text-base sm:text-lg">{{ car()!.v_max }} km/h</p>
               </div>
             }
             @if (car()!.fuel_type) {
               <div>
-                <p class="text-gray-400 text-sm mb-1">Fuel Type</p>
-                <p class="text-white font-semibold text-lg">{{ car()!.fuel_type }}</p>
+                <p class="text-gray-400 text-xs sm:text-sm mb-1">Fuel Type</p>
+                <p class="text-white font-semibold text-base sm:text-lg">{{ car()!.fuel_type }}</p>
               </div>
             }
             @if (car()!.transmission) {
               <div>
-                <p class="text-gray-400 text-sm mb-1">Transmission</p>
-                <p class="text-white font-semibold text-lg">{{ car()!.transmission }}</p>
+                <p class="text-gray-400 text-xs sm:text-sm mb-1">Transmission</p>
+                <p class="text-white font-semibold text-base sm:text-lg">{{ car()!.transmission }}</p>
               </div>
             }
           </div>
 
           <!-- CTA Buttons -->
-          <div class="flex flex-col sm:flex-row gap-4">
+          <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <button (click)="requestPrice()" class="btn-luxury flex-1">
               Request Price
             </button>
@@ -138,16 +138,17 @@
       </div>
 
       <!-- Tabs Section -->
-      <div class="mt-16">
+      <div class="mt-10 md:mt-16">
         <!-- Tab Headers -->
-        <div class="border-b border-mansory-light-gray mb-8">
-          <div class="flex space-x-8">
+        <div class="border-b border-mansory-light-gray mb-6 md:mb-8 overflow-x-auto">
+          <div class="flex space-x-4 sm:space-x-8 min-w-max">
             <button 
               (click)="activeTab.set('overview')"
               [class.text-mansory-gold]="activeTab() === 'overview'"
               [class.border-mansory-gold]="activeTab() === 'overview'"
+              [class.border-transparent]="activeTab() !== 'overview'"
               [class.text-gray-400]="activeTab() !== 'overview'"
-              class="pb-4 border-b-2 font-semibold uppercase text-sm tracking-wider transition-colors hover:text-mansory-gold"
+              class="pb-4 border-b-2 font-semibold uppercase text-xs sm:text-sm tracking-wider transition-colors hover:text-mansory-gold whitespace-nowrap"
             >
               Overview
             </button>
@@ -155,8 +156,9 @@
               (click)="activeTab.set('specs')"
               [class.text-mansory-gold]="activeTab() === 'specs'"
               [class.border-mansory-gold]="activeTab() === 'specs'"
+              [class.border-transparent]="activeTab() !== 'specs'"
               [class.text-gray-400]="activeTab() !== 'specs'"
-              class="pb-4 border-b-2 font-semibold uppercase text-sm tracking-wider transition-colors hover:text-mansory-gold"
+              class="pb-4 border-b-2 font-semibold uppercase text-xs sm:text-sm tracking-wider transition-colors hover:text-mansory-gold whitespace-nowrap"
             >
               Specifications
             </button>
@@ -164,8 +166,9 @@
               (click)="activeTab.set('features')"
               [class.text-mansory-gold]="activeTab() === 'features'"
               [class.border-mansory-gold]="activeTab() === 'features'"
+              [class.border-transparent]="activeTab() !== 'features'"
               [class.text-gray-400]="activeTab() !== 'features'"
-              class="pb-4 border-b-2 font-semibold uppercase text-sm tracking-wider transition-colors hover:text-mansory-gold"
+              class="pb-4 border-b-2 font-semibold uppercase text-xs sm:text-sm tracking-wider transition-colors hover:text-mansory-gold whitespace-nowrap"
             >
               Features
             </button>
@@ -173,52 +176,52 @@
         </div>
 
         <!-- Tab Content -->
-        <div class="bg-mansory-gray p-8 rounded-sm border border-mansory-light-gray">
+        <div class="bg-mansory-gray p-5 sm:p-6 md:p-8 rounded-sm border border-mansory-light-gray">
           <!-- Overview Tab -->
           @if (activeTab() === 'overview') {
             <div class="prose prose-invert max-w-none">
               @if (car()!.description) {
-                <p class="text-gray-300 leading-relaxed text-lg">
+                <p class="text-gray-300 leading-relaxed text-base md:text-lg">
                   {{ car()!.description }}
                 </p>
               } @else {
                 <p class="text-gray-400">No description available.</p>
               }
 
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mt-6 md:mt-8">
                 @if (car()!.body_type) {
                   <div class="flex items-start space-x-3">
-                    <span class="text-mansory-gold">•</span>
+                    <span class="text-mansory-gold mt-0.5">•</span>
                     <div>
-                      <p class="text-white font-semibold">Body Type</p>
-                      <p class="text-gray-400">{{ car()!.body_type }}</p>
+                      <p class="text-white font-semibold text-sm sm:text-base">Body Type</p>
+                      <p class="text-gray-400 text-sm">{{ car()!.body_type }}</p>
                     </div>
                   </div>
                 }
                 @if (car()!.engine) {
                   <div class="flex items-start space-x-3">
-                    <span class="text-mansory-gold">•</span>
+                    <span class="text-mansory-gold mt-0.5">•</span>
                     <div>
-                      <p class="text-white font-semibold">Engine</p>
-                      <p class="text-gray-400">{{ car()!.engine }}</p>
+                      <p class="text-white font-semibold text-sm sm:text-base">Engine</p>
+                      <p class="text-gray-400 text-sm">{{ car()!.engine }}</p>
                     </div>
                   </div>
                 }
                 @if (car()!.color_exterior) {
                   <div class="flex items-start space-x-3">
-                    <span class="text-mansory-gold">•</span>
+                    <span class="text-mansory-gold mt-0.5">•</span>
                     <div>
-                      <p class="text-white font-semibold">Exterior Color</p>
-                      <p class="text-gray-400">{{ car()!.color_exterior }}</p>
+                      <p class="text-white font-semibold text-sm sm:text-base">Exterior Color</p>
+                      <p class="text-gray-400 text-sm">{{ car()!.color_exterior }}</p>
                     </div>
                   </div>
                 }
                 @if (car()!.color_interior) {
                   <div class="flex items-start space-x-3">
-                    <span class="text-mansory-gold">•</span>
+                    <span class="text-mansory-gold mt-0.5">•</span>
                     <div>
-                      <p class="text-white font-semibold">Interior Color</p>
-                      <p class="text-gray-400">{{ car()!.color_interior }}</p>
+                      <p class="text-white font-semibold text-sm sm:text-base">Interior Color</p>
+                      <p class="text-gray-400 text-sm">{{ car()!.color_interior }}</p>
                     </div>
                   </div>
                 }
@@ -234,19 +237,19 @@
                   @if (getSpecsByCategory(category.value).length > 0) {
                     <div>
                       <!-- Category Header -->
-                      <h3 class="text-mansory-gold font-semibold uppercase text-sm tracking-wider mb-4 pb-2 border-b border-mansory-gold/30">
+                      <h3 class="text-mansory-gold font-semibold uppercase text-xs sm:text-sm tracking-wider mb-3 md:mb-4 pb-2 border-b border-mansory-gold/30">
                         {{ category.label }}
                       </h3>
 
                       <!-- Specifications Grid -->
-                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-4">
                         @for (spec of getSpecsByCategory(category.value); track spec.id) {
-                          <div class="flex justify-between items-center py-3 px-4 bg-mansory-black rounded border border-mansory-light-gray/50 hover:border-mansory-gold/30 transition-colors">
-                            <span class="text-gray-400 text-sm">{{ spec.spec_label }}</span>
-                            <span class="text-white font-semibold">
+                          <div class="flex justify-between items-center py-2.5 md:py-3 px-3 md:px-4 bg-mansory-black rounded border border-mansory-light-gray/50 hover:border-mansory-gold/30 transition-colors">
+                            <span class="text-gray-400 text-xs sm:text-sm pr-2">{{ spec.spec_label }}</span>
+                            <span class="text-white font-semibold text-sm whitespace-nowrap">
                               {{ spec.spec_value }}
                               @if (spec.spec_unit) {
-                                <span class="text-gray-400 text-sm ml-1">{{ spec.spec_unit }}</span>
+                                <span class="text-gray-400 text-xs ml-1">{{ spec.spec_unit }}</span>
                               }
                             </span>
                           </div>
@@ -257,52 +260,52 @@
                 }
               </div>
             } @else {
-              <div class="text-center py-12">
-                <svg class="w-16 h-16 mx-auto text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="text-center py-10 md:py-12">
+                <svg class="w-12 h-12 md:w-16 md:h-16 mx-auto text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
-                <p class="text-gray-400 text-lg">No specifications available</p>
-                <p class="text-gray-500 text-sm mt-2">Technical details will be added soon</p>
+                <p class="text-gray-400 text-base md:text-lg">No specifications available</p>
+                <p class="text-gray-500 text-xs sm:text-sm mt-2">Technical details will be added soon</p>
               </div>
             }
           }
 
           <!-- Features Tab -->
           @if (activeTab() === 'features') {
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
               @if (car()!.doors) {
                 <div class="flex items-center space-x-3 text-gray-300">
-                  <svg class="w-5 h-5 text-mansory-gold" fill="currentColor" viewBox="0 0 20 20">
+                  <svg class="w-4 h-4 sm:w-5 sm:h-5 text-mansory-gold flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
                     <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                   </svg>
-                  <span>{{ car()!.doors }} Doors</span>
+                  <span class="text-sm sm:text-base">{{ car()!.doors }} Doors</span>
                 </div>
               }
               @if (car()!.seats) {
                 <div class="flex items-center space-x-3 text-gray-300">
-                  <svg class="w-5 h-5 text-mansory-gold" fill="currentColor" viewBox="0 0 20 20">
+                  <svg class="w-4 h-4 sm:w-5 sm:h-5 text-mansory-gold flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
                     <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                   </svg>
-                  <span>{{ car()!.seats }} Seats</span>
+                  <span class="text-sm sm:text-base">{{ car()!.seats }} Seats</span>
                 </div>
               }
               @if (car()!.acceleration) {
                 <div class="flex items-center space-x-3 text-gray-300">
-                  <svg class="w-5 h-5 text-mansory-gold" fill="currentColor" viewBox="0 0 20 20">
+                  <svg class="w-4 h-4 sm:w-5 sm:h-5 text-mansory-gold flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
                     <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                   </svg>
-                  <span>0-100 km/h in {{ car()!.acceleration }}s</span>
+                  <span class="text-sm sm:text-base">0-100 km/h in {{ car()!.acceleration }}s</span>
                 </div>
               }
               @if (car()!.is_featured) {
                 <div class="flex items-center space-x-3 text-gray-300">
-                  <svg class="w-5 h-5 text-mansory-gold" fill="currentColor" viewBox="0 0 20 20">
+                  <svg class="w-4 h-4 sm:w-5 sm:h-5 text-mansory-gold flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                   </svg>
-                  <span>Featured Vehicle</span>
+                  <span class="text-sm sm:text-base">Featured Vehicle</span>
                 </div>
               }
             </div>
@@ -311,9 +314,9 @@
       </div>
 
       <!-- Back Button -->
-      <div class="mt-12">
-        <a routerLink="/cars" class="inline-flex items-center space-x-2 text-mansory-gold hover:text-white transition-colors">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="mt-8 md:mt-12">
+        <a routerLink="/cars" class="inline-flex items-center space-x-2 text-mansory-gold hover:text-white transition-colors text-sm sm:text-base">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
           </svg>
           <span>Back to All Cars</span>
