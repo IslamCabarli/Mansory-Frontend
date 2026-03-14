@@ -1,93 +1,226 @@
-<!-- header.component.html -->
-<header class="fixed top-0 left-0 right-0 z-50 bg-mansory-black/95 backdrop-blur-md border-b border-mansory-gray">
-  <div class="container-custom">
+<!-- Header -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-md border-b border-gray-800">
+  <div class="max-w-screen-2xl mx-auto px-6">
     <nav class="flex items-center justify-between h-20">
-      <!-- Logo -->
-      <a routerLink="/home" class="flex items-center space-x-3">
-        <div class="text-3xl font-heading font-bold tracking-wider">
-          <span class="text-mansory-gold">MANSORY</span>
+      
+      <!-- Sol - Hamburger + Desktop Menu -->
+      <div class="flex items-center space-x-8">
+        <!-- Hamburger Menu Button -->
+        <button 
+          (click)="toggleSideMenu()" 
+          class="text-white p-2 hover:text-mansory-gold transition-colors"
+          aria-label="Menu"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+
+        <!-- Desktop Menu Items -->
+        <div class="hidden lg:flex items-center space-x-6">
+          <a 
+            routerLink="/home" 
+            routerLinkActive="text-mansory-gold" 
+            [routerLinkActiveOptions]="{exact: true}"
+            class="text-white hover:text-mansory-gold transition-colors uppercase text-sm tracking-wider font-medium"
+          >
+            Home
+          </a>
+
+          <a 
+            routerLink="/cars" 
+            routerLinkActive="text-mansory-gold"
+            class="text-white hover:text-mansory-gold transition-colors uppercase text-sm tracking-wider font-medium"
+          >
+            Cars
+          </a>
+
+          <a 
+            routerLink="/models" 
+            routerLinkActive="text-mansory-gold"
+            class="text-white hover:text-mansory-gold transition-colors uppercase text-sm tracking-wider font-medium"
+          >
+            Models
+          </a>
+
+          <!-- Configurator Dropdown (Desktop) -->
+          <div class="relative">
+            <button 
+              (click)="toggleConfigurator()"
+              class="text-white hover:text-mansory-gold transition-colors uppercase text-sm tracking-wider font-medium flex items-center space-x-1"
+            >
+              <span>Configurator</span>
+              <svg 
+                class="w-4 h-4 transition-transform"
+                [class.rotate-180]="isConfiguratorOpen()"
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+
+            <!-- Dropdown Menu -->
+            @if (isConfiguratorOpen()) {
+              <div class="absolute top-full left-0 mt-2 w-48 bg-black/95 backdrop-blur-md border border-gray-800 rounded shadow-xl animate-fade-in">
+                @for (car of configuratorCars; track car.id) {
+                  <button
+                    (click)="selectConfiguratorCar(car.detailUrl)"
+                    class="block w-full text-left px-4 py-3 text-white hover:text-mansory-gold hover:bg-gray-900 transition-colors text-sm tracking-wider border-b border-gray-800 last:border-b-0"
+                  >
+                    {{ car.name }}
+                  </button>
+                }
+              </div>
+            }
+          </div>
         </div>
+      </div>
+
+      <!-- Orta - MANSORY Logo -->
+      <a routerLink="/home" class="absolute left-1/2 transform -translate-x-1/2">
+        <img 
+          src="assets/Logo.png" 
+          alt="MANSORY" 
+          class="h-16 w-auto hover:opacity-80 transition-opacity"
+        />
       </a>
 
-      <!-- Desktop Menu -->
-      <div class="hidden md:flex items-center space-x-8">
-        <a routerLink="/home" routerLinkActive="text-mansory-gold" [routerLinkActiveOptions]="{exact: true}"
-           class="text-white hover:text-mansory-gold transition-colors duration-300 uppercase text-sm tracking-wider font-medium">
+      <!-- Sağ - Contact Us -->
+      <a 
+        routerLink="/contact" 
+        class="text-white hover:text-mansory-gold transition-colors uppercase text-sm tracking-wider font-medium"
+      >
+        Contact Us
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- Spacer -->
+<div class="h-20"></div>
+
+<!-- ========== SIDE MENU (Sol tərəfdən açılan) ========== -->
+@if (isSideMenuOpen()) {
+  <!-- Backdrop -->
+  <div 
+    class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 animate-fade-in"
+    (click)="closeAllMenus()"
+  ></div>
+
+  <!-- Side Panel -->
+  <div class="fixed top-0 left-0 h-full w-80 bg-black border-r border-gray-800 z-50 animate-slide-in-left overflow-y-auto">
+    <div class="p-8">
+      
+      <!-- Close Button -->
+      <button 
+        (click)="toggleSideMenu()" 
+        class="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <!-- Logo in Side Menu -->
+      <div class="mb-8">
+        <img 
+          src="assets/Logo.png" 
+          alt="MANSORY" 
+          class="h-16 w-auto"
+        />
+      </div>
+
+      <!-- Menu Items -->
+      <div class="flex flex-col space-y-6">
+        
+        <!-- Home -->
+        <a 
+          routerLink="/home" 
+          (click)="toggleSideMenu()"
+          routerLinkActive="text-mansory-gold"
+          [routerLinkActiveOptions]="{exact: true}"
+          class="text-white hover:text-mansory-gold transition-colors uppercase text-sm tracking-widest font-medium border-b border-gray-800 pb-3"
+        >
           Home
         </a>
-        <a routerLink="/cars" routerLinkActive="text-mansory-gold"
-           class="text-white hover:text-mansory-gold transition-colors duration-300 uppercase text-sm tracking-wider font-medium">
-          Cars
-        </a>
-        <a routerLink="/models" routerLinkActive="text-mansory-gold"
-           class="text-white hover:text-mansory-gold transition-colors duration-300 uppercase text-sm tracking-wider font-medium">
+
+        <!-- Models -->
+        <a 
+          routerLink="/models" 
+          (click)="toggleSideMenu()"
+          routerLinkActive="text-mansory-gold"
+          class="text-white hover:text-mansory-gold transition-colors uppercase text-sm tracking-widest font-medium border-b border-gray-800 pb-3"
+        >
           Models
         </a>
-        
+
+        <!-- Cars -->
+        <a 
+          routerLink="/cars" 
+          (click)="toggleSideMenu()"
+          routerLinkActive="text-mansory-gold"
+          class="text-white hover:text-mansory-gold transition-colors uppercase text-sm tracking-widest font-medium border-b border-gray-800 pb-3"
+        >
+          Cars
+        </a>
+
+        <!-- Configurator (Dropdown in Side Menu) -->
+        <div class="border-b border-gray-800 pb-3">
+          <button 
+            (click)="toggleConfigurator()"
+            class="w-full flex items-center justify-between text-white hover:text-mansory-gold transition-colors uppercase text-sm tracking-widest font-medium"
+          >
+            <span>Configurator</span>
+            <svg 
+              class="w-4 h-4 transition-transform"
+              [class.rotate-180]="isConfiguratorOpen()"
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+
+          <!-- Configurator Dropdown -->
+          @if (isConfiguratorOpen()) {
+            <div class="mt-4 ml-4 space-y-3 animate-fade-in">
+              @for (car of configuratorCars; track car.id) {
+                <button
+                  (click)="selectConfiguratorCar(car.detailUrl)"
+                  class="block w-full text-left text-gray-400 hover:text-mansory-gold transition-colors text-sm tracking-wider"
+                >
+                  {{ car.name }}
+                </button>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Admin (if logged in) -->
         @if (authService.isUserAdmin()) {
-          <div class="flex items-center space-x-4">
-            <a routerLink="/admin" routerLinkActive="text-mansory-gold"
-               class="text-white hover:text-mansory-gold transition-colors duration-300 uppercase text-sm tracking-wider font-medium">
-              Admin
-            </a>
-            <span class="text-gray-400 text-sm">{{ authService.currentUser()?.name }}</span>
-            <button (click)="logout()" 
-                    class="btn-luxury-outline py-2 px-6 text-xs">
+          <a 
+            routerLink="/admin" 
+            (click)="toggleSideMenu()"
+            routerLinkActive="text-mansory-gold"
+            class="text-white hover:text-mansory-gold transition-colors uppercase text-sm tracking-widest font-medium border-b border-gray-800 pb-3"
+          >
+            Admin
+          </a>
+
+          <div class="pt-4 border-t border-gray-800 mt-4">
+            <p class="text-gray-400 text-sm mb-4">{{ authService.currentUser()?.name }}</p>
+            <button 
+              (click)="logout()" 
+              class="w-full btn-luxury-outline py-2 text-xs"
+            >
               Logout
             </button>
           </div>
         }
       </div>
-
-      <!-- Mobile Menu Button -->
-      <button (click)="toggleMenu()" class="md:hidden text-white p-2">
-        @if (!isMenuOpen()) {
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
-        } @else {
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        }
-      </button>
-    </nav>
-
-    <!-- Mobile Menu -->
-    @if (isMenuOpen()) {
-      <div class="md:hidden pb-6 animate-fade-in">
-        <div class="flex flex-col space-y-4">
-          <a routerLink="/home" (click)="toggleMenu()"
-             class="text-white hover:text-mansory-gold transition-colors duration-300 uppercase text-sm tracking-wider font-medium py-2">
-            Home
-          </a>
-          <a routerLink="/cars" (click)="toggleMenu()"
-             class="text-white hover:text-mansory-gold transition-colors duration-300 uppercase text-sm tracking-wider font-medium py-2">
-            Cars
-          </a>
-          <a routerLink="/models" (click)="toggleMenu()"
-             class="text-white hover:text-mansory-gold transition-colors duration-300 uppercase text-sm tracking-wider font-medium py-2">
-            Models
-          </a>
-          
-          @if (authService.isUserAdmin()) {
-            <a routerLink="/admin" (click)="toggleMenu()"
-               class="text-white hover:text-mansory-gold transition-colors duration-300 uppercase text-sm tracking-wider font-medium py-2">
-              Admin
-            </a>
-            <div class="pt-4 border-t border-mansory-gray">
-              <p class="text-gray-400 text-sm mb-3">{{ authService.currentUser()?.name }}</p>
-              <button (click)="logout()" 
-                      class="btn-luxury-outline w-full py-2 text-xs">
-                Logout
-              </button>
-            </div>
-          }
-        </div>
-      </div>
-    }
+    </div>
   </div>
-</header>
-
-<!-- Spacer for fixed header -->
-<div class="h-20"></div>
+}
