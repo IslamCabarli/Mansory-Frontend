@@ -62,6 +62,8 @@
   }
 </section>
 
+<app-model-finder />
+
 <!-- Brands Section -->
 <section class="section-padding bg-mansory-gray">
   <div class="container-custom">
@@ -129,7 +131,9 @@
       </div>
 
       <div class="text-center mt-12">
-        <a routerLink="/cars" class="btn-luxury"> View All Cars </a>
+        <a routerLink="/cars" class="bg-gray-600/50 text-white font-medium uppercase px-12 py-4 rounded-lg">
+          View All Cars
+        </a>
       </div>
     } @else {
       <div class="text-center py-20">
@@ -138,104 +142,6 @@
         </p>
       </div>
     }
-  </div>
-</section>
-
-<!-- Why Choose Us Section -->
-<section class="section-padding bg-mansory-gray">
-  <div class="container-custom">
-    <div class="text-center mb-16">
-      <h2 class="text-4xl md:text-5xl font-heading font-bold text-white mb-4">
-        Why Choose <span class="text-mansory-gold">Mansory</span>
-      </h2>
-      <div class="gold-line"></div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-      <!-- Feature 1 -->
-      <div class="text-center group">
-        <div
-          class="w-20 h-20 mx-auto mb-6 bg-mansory-gold/10 rounded-full flex items-center justify-center border-2 border-mansory-gold group-hover:bg-mansory-gold transition-all duration-300"
-        >
-          <svg
-            class="w-10 h-10 text-mansory-gold group-hover:text-black transition-colors"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-            />
-          </svg>
-        </div>
-        <h3 class="text-xl font-heading font-semibold text-white mb-3">
-          Bespoke Customization
-        </h3>
-        <p class="text-gray-400 leading-relaxed">
-          Every detail tailored to your exact specifications, creating a truly
-          unique automotive masterpiece
-        </p>
-      </div>
-
-      <!-- Feature 2 -->
-      <div class="text-center group">
-        <div
-          class="w-20 h-20 mx-auto mb-6 bg-mansory-gold/10 rounded-full flex items-center justify-center border-2 border-mansory-gold group-hover:bg-mansory-gold transition-all duration-300"
-        >
-          <svg
-            class="w-10 h-10 text-mansory-gold group-hover:text-black transition-colors"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M13 10V3L4 14h7v7l9-11h-7z"
-            />
-          </svg>
-        </div>
-        <h3 class="text-xl font-heading font-semibold text-white mb-3">
-          Performance Excellence
-        </h3>
-        <p class="text-gray-400 leading-relaxed">
-          Advanced engineering solutions delivering extraordinary power and
-          unmatched driving dynamics
-        </p>
-      </div>
-
-      <!-- Feature 3 -->
-      <div class="text-center group">
-        <div
-          class="w-20 h-20 mx-auto mb-6 bg-mansory-gold/10 rounded-full flex items-center justify-center border-2 border-mansory-gold group-hover:bg-mansory-gold transition-all duration-300"
-        >
-          <svg
-            class="w-10 h-10 text-mansory-gold group-hover:text-black transition-colors"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-            />
-          </svg>
-        </div>
-        <h3 class="text-xl font-heading font-semibold text-white mb-3">
-          Exclusive Luxury
-        </h3>
-        <p class="text-gray-400 leading-relaxed">
-          Premium materials and meticulous craftsmanship ensuring the highest
-          standards of luxury
-        </p>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -251,8 +157,32 @@
       <p class="text-gray-300 text-lg mb-8">
         Discover your dream car from our exclusive collection
       </p>
-      <a routerLink="/cars" class="btn-luxury text-base px-12 py-4">
+      <a routerLink="/cars" class="bg-gray-600/50 text-white font-medium uppercase px-12 py-4 rounded-lg">
         Browse Collection
+      </a>
+    </div>
+  </div>
+</section>
+<!-- CTA Section - Join Mansory -->
+<section class="py-20 md:py-32 bg-mansory-black">
+  <div class="container-custom">
+    <div class="max-w-4xl mx-auto text-center">
+      <!-- Main Heading -->
+      <h2 class="text-5xl md:text-6xl lg:text-7xl font-heading font-bold text-white mb-6 tracking-wide">
+        JOIN MANSORY
+      </h2>
+      
+      <!-- Subheading -->
+      <p class="text-gray-400 text-lg md:text-xl mb-10">
+        Get in touch to make your dream car true.
+      </p>
+      
+      <!-- Contact Button -->
+      <a 
+        routerLink="/contact" 
+        class="inline-block px-10 py-4 bg-gray-600/50 text-white font-medium uppercase text-sm tracking-widest hover:bg-gray-500 transition-all duration-300 rounded-lg"
+      >
+        Contact Us
       </a>
     </div>
   </div>

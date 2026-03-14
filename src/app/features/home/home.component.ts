@@ -7,11 +7,12 @@ import { Car } from '../../core/models/car.model';
 import { Brand } from '../../core/models/brand.model';
 import { CarCardComponent } from '../../shared/components/car-card/car-card.component';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
+import { ModelFinderComponent } from '../model-finder/model-finder.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, CarCardComponent, LoaderComponent],
+  imports: [CommonModule, RouterLink, CarCardComponent, LoaderComponent, ModelFinderComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
