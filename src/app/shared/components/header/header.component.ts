@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
@@ -13,8 +13,8 @@ import { AuthService } from '../../../core/services/auth.service';
 export class HeaderComponent {
   isSideMenuOpen = signal(false);
   isConfiguratorOpen = signal(false);
+  isScrolled = signal(false);
 
-  // ✅ Configurator maşınları (2 maşın əlavə edəcəksən)
   configuratorCars = [
     { id: 1, name: 'CULLINAN II', detailUrl: '/cars/1' },
     { id: 2, name: 'PUROSANGUE', detailUrl: '/cars/2' }
@@ -25,25 +25,26 @@ export class HeaderComponent {
     private router: Router
   ) {}
 
-  // Sol tərəfdən açılan side menu
-  toggleSideMenu() {
-    this.isSideMenuOpen.update(value => !value);
-    this.isConfiguratorOpen.set(false); // Configurator bağlan
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.isScrolled.set(window.scrollY > 30);
   }
 
-  // Configurator dropdown toggle
+  toggleSideMenu() {
+    this.isSideMenuOpen.update(value => !value);
+    this.isConfiguratorOpen.set(false);
+  }
+
   toggleConfigurator() {
     this.isConfiguratorOpen.update(value => !value);
   }
 
-  // Configurator maşın seçimi
   selectConfiguratorCar(carUrl: string) {
     this.isConfiguratorOpen.set(false);
     this.isSideMenuOpen.set(false);
     this.router.navigate([carUrl]);
   }
 
-  // Backdrop click - close menus
   closeAllMenus() {
     this.isSideMenuOpen.set(false);
     this.isConfiguratorOpen.set(false);

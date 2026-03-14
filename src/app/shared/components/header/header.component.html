@@ -1,5 +1,12 @@
 <!-- Header -->
-<header class="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-md border-b border-gray-800">
+<header 
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 "
+  [class.bg-transparent]="!isScrolled()"
+  [class.border-gray-800]="!isScrolled()"
+  [class.bg-black]="isScrolled()"
+  [class.backdrop-blur-md]="isScrolled()"
+  [class.border-gray-800]="isScrolled()"
+>
   <div class="max-w-screen-2xl mx-auto px-6">
     <nav class="flex items-center justify-between h-20">
       
@@ -63,7 +70,7 @@
 
             <!-- Dropdown Menu -->
             @if (isConfiguratorOpen()) {
-              <div class="absolute top-full left-0 mt-2 w-48 bg-black/95 backdrop-blur-md border border-gray-800 rounded shadow-xl animate-fade-in">
+              <div class="absolute top-full left-0 mt-2 w-48 bg-black/95 backdrop-blur-md border border-gray-800 rounded shadow-xl animate-fade-in z-50">
                 @for (car of configuratorCars; track car.id) {
                   <button
                     (click)="selectConfiguratorCar(car.detailUrl)"
