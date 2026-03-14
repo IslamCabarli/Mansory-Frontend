@@ -23,6 +23,12 @@ export const routes: Routes = [
     loadComponent: () => import('./features/car-detail/car-detail.component').then(m => m.CarDetailComponent)
   },
   {
+    path: 'contact',
+    loadComponent: () => import('./features/contact/contact.component').then(m => m.ContactComponent)
+  },
+   
+  
+  {
     path: 'admin',
     loadComponent: () => import('./features/admin/admin.component').then(m => m.AdminComponent)
   },
