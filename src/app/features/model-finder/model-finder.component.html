@@ -1,0 +1,67 @@
+<section class="bg-mansory-black py-16">
+  <div class="container-custom">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-4xl md:text-5xl font-heading font-bold text-white mb-4 tracking-wider">
+        FIND YOUR DREAM MODEL
+      </h2>
+      <p class="text-gray-400 text-lg">
+        Choose options from below and find your customization
+      </p>
+    </div>
+
+    <!-- Search Form -->
+    <div class="max-w-5xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <!-- Brand Dropdown -->
+        <div class="relative">
+          <select
+            [(ngModel)]="selectedBrand"
+            (ngModelChange)="onBrandChange($event)"
+            class="w-full h-14 px-6 bg-transparent border border-gray-700 text-white rounded appearance-none cursor-pointer hover:border-gray-500 transition-colors focus:outline-none focus:border-mansory-gold"
+          >
+            <option [value]="null" class="bg-mansory-black">Brand</option>
+            @for (brand of brands(); track brand.id) {
+              <option [value]="brand.id" class="bg-mansory-black">{{ brand.name }}</option>
+            }
+          </select>
+          <!-- Dropdown Icon -->
+          <div class="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none">
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Model Dropdown -->
+        <div class="relative">
+          <select
+            [(ngModel)]="selectedModel"
+            [disabled]="!selectedBrand()"
+            class="w-full h-14 px-6 bg-transparent border border-gray-700 text-white rounded appearance-none cursor-pointer hover:border-gray-500 transition-colors focus:outline-none focus:border-mansory-gold disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <option value="" class="bg-mansory-black">Model</option>
+            @for (model of models(); track model) {
+              <option [value]="model" class="bg-mansory-black">{{ model }}</option>
+            }
+          </select>
+          <!-- Dropdown Icon -->
+          <div class="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none">
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Search Button -->
+        <button
+          (click)="search()"
+          class="h-14 bg-gray-700/50 text-gray-300 font-medium uppercase text-sm tracking-widest hover:bg-mansory-gold hover:text-black transition-all duration-300 rounded"
+        >
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
