@@ -81,14 +81,18 @@ export class BrandFormComponent implements OnInit {
       return;
     }
 
+    // ✅ Auto-generate slug if empty
+    if (!this.formData.slug.trim()) {
+      this.generateSlug();
+    }
+
     this.isSubmitting.set(true);
     this.errorMessage.set('');
 
-    const formDataToSubmit = this.convertToFormData(this.formData);
-
+    // ✅ Birbaşa JSON object göndər (FormData yox!)
     const operation = this.isEditMode()
-      ? this.brandService.update(this.brandId!, formDataToSubmit)
-      : this.brandService.create(formDataToSubmit);
+      ? this.brandService.update(this.brandId!, this.formData)
+      : this.brandService.create(this.formData);
 
     operation.subscribe({
       next: (response) => {
@@ -101,7 +105,15 @@ export class BrandFormComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error saving brand:', error);
-        this.errorMessage.set(error.error?.message || 'Failed to save brand');
+        
+        // ✅ Validation errors göstər
+        if (error.error?.errors) {
+          const errors = Object.values(error.error.errors).flat().join(', ');
+          this.errorMessage.set(errors);
+        } else {
+          this.errorMessage.set(error.error?.message || 'Failed to save brand');
+        }
+        
         this.isSubmitting.set(false);
       }
     });
@@ -109,13 +121,5 @@ export class BrandFormComponent implements OnInit {
 
   cancel(): void {
     this.router.navigate(['/admin/brands']);
-  }
-
-  private convertToFormData(data: any): FormData {
-    const formData = new FormData();
-    Object.keys(data).forEach(key => {
-      formData.append(key, data[key]);
-    });
-    return formData;
   }
 }
