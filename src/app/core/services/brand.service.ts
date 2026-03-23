@@ -31,7 +31,7 @@ export class BrandService {
 
   // Update brand (Admin only)
   update(id: number, brand: FormData): Observable<BrandResponse> {
-    return this.http.post<BrandResponse>(`${this.apiUrl}/${id}`, brand);
+    return this.http.put<BrandResponse>(`${this.apiUrl}/${id}`, brand);
   }
 
   // Delete brand (Admin only)
