@@ -1,1 +1,123 @@
-<p>brand-list works!</p>
+<div class="min-h-screen bg-mansory-black py-8">
+  <div class="container-custom">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-3xl font-heading font-bold text-white mb-2">Brand Management</h1>
+        <p class="text-gray-400">Manage luxury automotive brands</p>
+      </div>
+      <a routerLink="/admin/brands/create" class="btn-luxury px-6 py-3">
+        <span class="flex items-center space-x-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+          </svg>
+          <span>Add New Brand</span>
+        </span>
+      </a>
+    </div>
+
+    <!-- Loading -->
+    @if (isLoading()) {
+      <div class="text-center py-20">
+        <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-mansory-gold"></div>
+      </div>
+    }
+
+    <!-- Brands Table -->
+    @else if (brands().length > 0) {
+      <div class="bg-mansory-gray rounded-lg overflow-hidden border border-mansory-light-gray">
+        <table class="w-full">
+          <thead class="bg-mansory-light-gray">
+            <tr>
+              <th class="text-left px-6 py-4 text-white font-semibold text-sm uppercase tracking-wider">Brand</th>
+              <th class="text-left px-6 py-4 text-white font-semibold text-sm uppercase tracking-wider">Slug</th>
+              <th class="text-center px-6 py-4 text-white font-semibold text-sm uppercase tracking-wider">Cars</th>
+              <th class="text-center px-6 py-4 text-white font-semibold text-sm uppercase tracking-wider">Status</th>
+              <th class="text-center px-6 py-4 text-white font-semibold text-sm uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-mansory-light-gray">
+            @for (brand of brands(); track brand.id) {
+              <tr class="hover:bg-mansory-light-gray/50 transition-colors">
+                <!-- Brand Name -->
+                <td class="px-6 py-4">
+                  <div>
+                    <p class="text-white font-semibold">{{ brand.name }}</p>
+                    @if (brand.description) {
+                      <p class="text-gray-400 text-sm mt-1 line-clamp-1">{{ brand.description }}</p>
+                    }
+                  </div>
+                </td>
+
+                <!-- Slug -->
+                <td class="px-6 py-4">
+                  <span class="text-gray-400 text-sm font-mono">{{ brand.slug }}</span>
+                </td>
+
+                <!-- Cars Count -->
+                <td class="px-6 py-4 text-center">
+                  <span class="text-white font-semibold">{{ brand.cars_count || 0 }}</span>
+                </td>
+
+                <!-- Status -->
+                <td class="px-6 py-4 text-center">
+                  <button
+                    (click)="toggleActive(brand)"
+                    class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors"
+                    [class.bg-green-500/20]="brand.is_active"
+                    [class.text-green-400]="brand.is_active"
+                    [class.bg-gray-500/20]="!brand.is_active"
+                    [class.text-gray-400]="!brand.is_active"
+                  >
+                    {{ brand.is_active ? 'Active' : 'Inactive' }}
+                  </button>
+                </td>
+
+                <!-- Actions -->
+                <td class="px-6 py-4">
+                  <div class="flex items-center justify-center space-x-2">
+                    <!-- Edit -->
+                    <button
+                      (click)="editBrand(brand.id)"
+                      class="p-2 text-blue-400 hover:bg-blue-500/10 rounded transition-colors"
+                      title="Edit"
+                    >
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                      </svg>
+                    </button>
+
+                    <!-- Delete -->
+                    <button
+                      (click)="deleteBrand(brand)"
+                      class="p-2 text-red-400 hover:bg-red-500/10 rounded transition-colors"
+                      title="Delete"
+                    >
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
+    <!-- Empty State -->
+    @else {
+      <div class="text-center py-20 bg-mansory-gray rounded-lg border border-mansory-light-gray">
+        <svg class="w-16 h-16 mx-auto text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+        </svg>
+        <h3 class="text-xl font-semibold text-white mb-2">No brands yet</h3>
+        <p class="text-gray-400 mb-6">Get started by creating your first brand</p>
+        <a routerLink="/admin/brands/create" class="btn-luxury inline-block px-6 py-3">
+          Create First Brand
+        </a>
+      </div>
+    }
+  </div>
+</div>
