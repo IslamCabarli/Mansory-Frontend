@@ -12,29 +12,24 @@ export class BrandService {
 
   constructor(private http: HttpClient) {}
 
-  
-
-  // Get all brands
   getAll(): Observable<BrandResponse> {
     return this.http.get<BrandResponse>(this.apiUrl);
   }
 
-  // Get brand by ID
   getById(id: number): Observable<BrandResponse> {
     return this.http.get<BrandResponse>(`${this.apiUrl}/${id}`);
   }
 
-  // Create brand (Admin only)
-  create(brand: FormData): Observable<BrandResponse> {
-    return this.http.post<BrandResponse>(this.apiUrl, brand);
+
+  create(brandData: any): Observable<BrandResponse> {
+    return this.http.post<BrandResponse>(this.apiUrl, brandData);
   }
 
-  // Update brand (Admin only)
-  update(id: number, brand: FormData): Observable<BrandResponse> {
-    return this.http.put<BrandResponse>(`${this.apiUrl}/${id}`, brand);
+
+  update(id: number, brandData: any): Observable<BrandResponse> {
+    return this.http.put<BrandResponse>(`${this.apiUrl}/${id}`, brandData);
   }
 
-  // Delete brand (Admin only)
   delete(id: number): Observable<BrandResponse> {
     return this.http.delete<BrandResponse>(`${this.apiUrl}/${id}`);
   }
