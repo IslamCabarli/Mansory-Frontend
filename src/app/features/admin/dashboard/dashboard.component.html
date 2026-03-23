@@ -93,37 +93,69 @@
 
       <!-- Actions Bar -->
 
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-heading font-semibold text-white">
-          Manage Cars
-        </h2>
-        <button
-          (click)="showCreateForm()"
-          class="btn-luxury flex items-center space-x-2"
+      <!-- Navigation Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+        <!-- Manage Cars Card -->
+        <div
+          class="bg-mansory-gray p-8 rounded-lg border border-mansory-light-gray hover:border-mansory-gold transition-colors"
         >
-          <svg
-            class="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-          <span>Add New Car</span>
-        </button>
-
-        <!-- Admin Dashboard -->
-        <div class="admin-card">
-          <h3>Brand Management</h3>
-          <a routerLink="/admin/brands" class="btn-luxury">Manage Brands</a>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-heading font-semibold text-white">
+              Car Management
+            </h3>
+            <svg
+              class="w-8 h-8 text-mansory-gold"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+          </div>
+          <p class="text-gray-400 mb-6">
+            Create, edit, and manage your car inventory
+          </p>
+          <button (click)="showCreateForm()" class="btn-luxury w-full">
+            Manage Cars
+          </button>
         </div>
-      </div>
 
+        <!-- Manage Brands Card -->
+        <a
+          routerLink="/admin/brands"
+          class="bg-mansory-gray p-8 rounded-lg border border-mansory-light-gray hover:border-mansory-gold transition-colors block"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-heading font-semibold text-white">
+              Brand Management
+            </h3>
+            <svg
+              class="w-8 h-8 text-blue-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+              />
+            </svg>
+          </div>
+          <p class="text-gray-400 mb-6">
+            Create and manage luxury automotive brands
+          </p>
+          <div class="btn-luxury-outline w-full text-center py-3">
+            Manage Brands
+          </div>
+        </a>
+      </div>
       <!-- Cars Table -->
       @if (isLoading()) {
         <app-loader />
