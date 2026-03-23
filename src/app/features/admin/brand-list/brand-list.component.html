@@ -21,10 +21,8 @@
       <div class="text-center py-20">
         <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-mansory-gold"></div>
       </div>
-    }
-
-    <!-- Brands Table -->
-    @else if (brands().length > 0) {
+    } @else if (brands().length > 0) {
+      <!-- Brands Table -->
       <div class="bg-mansory-gray rounded-lg overflow-hidden border border-mansory-light-gray">
         <table class="w-full">
           <thead class="bg-mansory-light-gray">
@@ -64,9 +62,9 @@
                   <button
                     (click)="toggleActive(brand)"
                     class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors"
-                    [class.bg-green-500/20]="brand.is_active"
+                    [class.bg-green-500]="brand.is_active"
                     [class.text-green-400]="brand.is_active"
-                    [class.bg-gray-500/20]="!brand.is_active"
+                    [class.bg-gray-500]="!brand.is_active"
                     [class.text-gray-400]="!brand.is_active"
                   >
                     {{ brand.is_active ? 'Active' : 'Inactive' }}
@@ -104,10 +102,8 @@
           </tbody>
         </table>
       </div>
-    }
-
-    <!-- Empty State -->
-    @else {
+    } @else {
+      <!-- Empty State -->
       <div class="text-center py-20 bg-mansory-gray rounded-lg border border-mansory-light-gray">
         <svg class="w-16 h-16 mx-auto text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
