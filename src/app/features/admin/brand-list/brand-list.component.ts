@@ -65,23 +65,25 @@ export class BrandListComponent implements OnInit {
     });
   }
 
-  toggleActive(brand: Brand): void {
-    const formData = new FormData();
-    formData.append('name', brand.name);
-    formData.append('slug', brand.slug);
-    formData.append('description', brand.description || '');
-    formData.append('is_active', String(!brand.is_active));
+toggleActive(brand: Brand): void {
+  
+  const updateData = {
+    name: brand.name,
+    slug: brand.slug,
+    description: brand.description || '',
+    is_active: !brand.is_active
+  };
 
-    this.brandService.update(brand.id, formData).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.loadBrands();
-        }
-      },
-      error: (error) => {
-        console.error('Error updating brand:', error);
-        alert('Failed to update brand status');
+  this.brandService.update(brand.id, updateData).subscribe({
+    next: (response) => {
+      if (response.success) {
+        this.loadBrands();
       }
-    });
-  }
+    },
+    error: (error) => {
+      console.error('Error updating brand:', error);
+      alert('Failed to update brand status');
+    }
+  });
+}
 }
