@@ -11,6 +11,6 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   }
 
   // Redirect to home if not admin
-  router.navigate(['/home']);
+  router.navigate(['/login']);
   return false;
 };
