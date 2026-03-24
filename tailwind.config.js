@@ -12,8 +12,9 @@ module.exports = {
         'mansory-light-gray': '#2A2A2A',
       },
       fontFamily: {
-        'heading': ['Playfair Display', 'serif'],
-        'body': ['Inter', 'sans-serif'],
+        'heading': ['Cormorant Garamond', 'serif'],
+        'sans': ['Montserrat', 'sans-serif'],
+        'body': ['Montserrat', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.6s ease-in-out',
