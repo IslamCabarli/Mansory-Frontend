@@ -2,63 +2,63 @@
 
 # 🏎️ Mansory Frontend
 
-**Mansory eksklüziv avtomobil kataloqunu nümayiş etdirən müasir Angular tətbiqi**
+**A modern Angular application showcasing the Mansory exclusive car catalogue**
 
 [![Angular](https://img.shields.io/badge/Angular-17+-DD0031?style=flat-square&logo=angular&logoColor=white)](https://angular.io/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5+-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3+-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=flat-square&logo=vercel)](https://mansory-frontend.vercel.app)
 
-[🚀 Canlı Demo](https://mansory-frontend.vercel.app) · [🐛 Xəta Bildir](../../issues) · [📖 Backend Repo](https://github.com/IslamCabarli/Mansory-Backend)
+[🚀 Live Demo](https://mansory-frontend.vercel.app) · [🐛 Report a Bug](../../issues) · [📖 Backend Repo](https://github.com/IslamCabarli/Mansory-Backend)
 
 </div>
 
 ---
 
-## 📋 Mündəricat
+## Table of Contents
 
-- [Layihə Haqqında](#layihə-haqqında)
-- [Xüsusiyyətlər](#xüsusiyyətlər)
-- [Texnologiyalar](#texnologiyalar)
-- [Başlamaq](#başlamaq)
-- [Ətraf Mühit Dəyişənləri](#ətraf-mühit-dəyişənləri)
-- [Layihə Strukturu](#layihə-strukturu)
+- [About](#about)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [Project Structure](#project-structure)
 - [Deployment](#deployment)
 
 ---
 
-## Layihə Haqqında
+## About
 
-**Mansory Frontend** — lüks avtomobil tuning brendinin rəsmi kataloq platformasıdır. İstifadəçilər brendlər üzrə filtrləmə, avtomobilin texniki göstəricilərini öyrənmə və admin panel vasitəsilə məzmunu idarə etmə imkanına sahibdirlər.
+**Mansory Frontend** is the official catalogue platform for the luxury automotive tuning brand. Users can browse cars filtered by brand, explore technical specifications, and manage content through the admin panel.
 
-Backend API ilə əlaqə saxlayır: `https://mansory-backend-production.up.railway.app/api`
-
----
-
-## Xüsusiyyətlər
-
-- 🔍 **Avtomobil Kataloqu** — brendlər üzrə filtrləmə və axtarış
-- 🖼️ **Şəkil Qalereyası** — hər avtomobil üçün çoxlu şəkillər
-- 🛠️ **Admin Panel** — avtomobil əlavə etmək, redaktə etmək, silmək və şəkilləri idarə etmək
-- 📱 **Responsive Dizayn** — mobil, planşet və desktop üçün tam uyğun
-- ⚡ **Performans** — Angular lazy loading ilə optimallaşdırılmış yüklənmə
+Communicates with the backend API at: `https://mansory-backend-production.up.railway.app/api`
 
 ---
 
-## Texnologiyalar
+## Features
 
-| Texnologiya | Versiya | Məqsəd |
+- 🔍 **Car Catalogue** — filter and search by brand
+- 🖼️ **Image Gallery** — multiple images per vehicle
+- 🛠️ **Admin Panel** — add, edit, delete cars and manage images
+- 📱 **Responsive Design** — fully adapted for mobile, tablet, and desktop
+- ⚡ **Performance** — optimised loading with Angular lazy loading
+
+---
+
+## Tech Stack
+
+| Technology | Version | Purpose |
 |---|---|---|
-| [Angular](https://angular.io/) | 17+ | Əsas framework |
-| [TypeScript](https://www.typescriptlang.org/) | 5+ | Proqramlaşdırma dili |
+| [Angular](https://angular.io/) | 17+ | Core framework |
+| [TypeScript](https://www.typescriptlang.org/) | 5+ | Programming language |
 | [Tailwind CSS](https://tailwindcss.com/) | 3+ | UI styling |
-| [RxJS](https://rxjs.dev/) | 7+ | Reaktiv proqramlaşdırma |
+| [RxJS](https://rxjs.dev/) | 7+ | Reactive programming |
 
 ---
 
-## Başlamaq
+## Getting Started
 
-### Tələblər
+### Prerequisites
 
 - **Node.js** ≥ 18.x → [nodejs.org](https://nodejs.org)
 - **Angular CLI** ≥ 17.x
@@ -67,36 +67,36 @@ Backend API ilə əlaqə saxlayır: `https://mansory-backend-production.up.railw
 npm install -g @angular/cli
 ```
 
-### Quraşdırma
+### Installation
 
 ```bash
-# 1. Repozitoriyanı klonlayın
-git clone https://github.com/IslamCabarli/mansory-frontend.git
+# 1. Clone the repository
+git clone https://github.com/IslamCabarli/Mansory-Frontend.git
 cd mansory-frontend
 
-# 2. Asılılıqları yükləyin
+# 2. Install dependencies
 npm install
 
-# 3. Lokal serveri başladın
+# 3. Start the development server
 ng serve
 ```
 
-Brauzerinizi açın: **http://localhost:4200**
+Open your browser at: **http://localhost:4200**
 
-### Mövcud Əmrlər
+### Available Commands
 
 ```bash
-ng serve          # Development server
+ng serve          # Start development server
 ng build          # Production build
-ng test           # Unit testlər
-ng lint           # Kod keyfiyyəti yoxlaması
+ng test           # Run unit tests
+ng lint           # Check code quality
 ```
 
 ---
 
-## Ətraf Mühit Dəyişənləri
+## Environment Variables
 
-`src/environments/environment.ts` faylını aşağıdakı kimi konfiqurasiya edin:
+Configure `src/environments/environment.ts` as follows:
 
 ```typescript
 // Development
@@ -114,20 +114,20 @@ export const environment = {
 };
 ```
 
-> ⚠️ `environment.ts` faylını heç vaxt git-ə commit etməyin. `.gitignore`-a əlavə edin.
+> ⚠️ Never commit `environment.ts` to git. Add it to `.gitignore`.
 
 ---
 
-## Layihə Strukturu
+## Project Structure
 
 ```
 src/
 ├── app/
-│   ├── core/              # Servisler, interceptors, guards
-│   ├── shared/            # Ortaq komponentlər və pipeslər
+│   ├── core/              # Services, interceptors, guards
+│   ├── shared/            # Shared components and pipes
 │   ├── features/
-│   │   ├── catalog/       # Avtomobil kataloqu
-│   │   ├── car-detail/    # Avtomobil detalları
+│   │   ├── catalog/       # Car catalogue
+│   │   ├── car-detail/    # Car detail page
 │   │   └── admin/         # Admin panel
 │   ├── app.routes.ts
 │   └── app.config.ts
@@ -141,7 +141,7 @@ src/
 
 ## Deployment
 
-Layihə **Vercel** üzərindən avtomatik deploy olunur. `main` branch-ə hər push-dan sonra deployment başlayır.
+The project is automatically deployed on **Vercel**. Every push to the `main` branch triggers a new deployment.
 
 ```bash
 # Manual deployment
