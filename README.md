@@ -9,7 +9,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3+-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=flat-square&logo=vercel)](https://mansory-frontend.vercel.app)
 
-[🚀 Canlı Demo](https://mansory-frontend.vercel.app) · [🐛 Xəta Bildir](../../issues) · [📖 Backend Repo](https://github.com/USERNAME/mansory-backend)
+[🚀 Canlı Demo](https://mansory-frontend.vercel.app) · [🐛 Xəta Bildir](../../issues) · [📖 Backend Repo](https://github.com/IslamCabarli/Mansory-Backend)
 
 </div>
 
@@ -71,7 +71,7 @@ npm install -g @angular/cli
 
 ```bash
 # 1. Repozitoriyanı klonlayın
-git clone https://github.com/USERNAME/mansory-frontend.git
+git clone https://github.com/IslamCabarli/mansory-frontend.git
 cd mansory-frontend
 
 # 2. Asılılıqları yükləyin
