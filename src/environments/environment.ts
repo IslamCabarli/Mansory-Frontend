@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:8000/api',
-  imageUrl: 'http://localhost:8000/storage'
+  production: true,
+  apiUrl: 'https://mansory-backend-production.up.railway.app/api',
+  imageUrl: 'https://mansory-backend-production.up.railway.app/storage'
 };
