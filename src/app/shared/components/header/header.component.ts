@@ -16,7 +16,7 @@ export class HeaderComponent {
   isScrolled = signal(false);
 
   configuratorCars = [
-    { id: 1, name: 'CULLINAN II', detailUrl: '/cars/1' },
+    { id: 22, name: 'CULLINAN II', detailUrl: '/cars/1' },
     { id: 2, name: 'PUROSANGUE', detailUrl: '/cars/2' }
   ];
 
