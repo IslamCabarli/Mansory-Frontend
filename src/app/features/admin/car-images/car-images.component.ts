@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarService } from '../../../core/services/car.service';
 import { Car, CarImage } from '../../../core/models/car.model';
@@ -12,6 +12,7 @@ import { Car, CarImage } from '../../../core/models/car.model';
 })
 export class CarImagesComponent {
   @Input() car!: Car;
+  @Output() imageChanged = new EventEmitter<void>(); // Yenilənmə üçün event
   
   isUploading = signal(false);
   selectedFiles: File[] = [];
@@ -37,15 +38,13 @@ export class CarImagesComponent {
     formData.append('image_type', 'gallery');
 
     this.carService.addImages(this.car.id, formData).subscribe({
-      next: (response) => {
-        console.log('Images uploaded:', response);
+      next: () => {
         this.isUploading.set(false);
         this.selectedFiles = [];
-        
-        window.location.reload();
+        this.imageChanged.emit(); // Valideyn komponentə deyirik ki, maşın datalarını yenidən çəksin
       },
       error: (error) => {
-        console.error('Error uploading images:', error);
+        console.error('Error:', error);
         alert('Failed to upload images');
         this.isUploading.set(false);
       }
@@ -57,11 +56,9 @@ export class CarImagesComponent {
 
     this.carService.deleteImage(this.car.id, image.id).subscribe({
       next: () => {
-        console.log('Image deleted');
-        window.location.reload();
+        this.imageChanged.emit(); // Səhifəni reload etmədən datanı yeniləyirik
       },
       error: (error) => {
-        console.error('Error deleting image:', error);
         alert('Failed to delete image');
       }
     });
@@ -70,11 +67,9 @@ export class CarImagesComponent {
   setPrimary(image: CarImage): void {
     this.carService.setPrimaryImage(this.car.id, image.id).subscribe({
       next: () => {
-        console.log('Primary image set');
-        window.location.reload();
+        this.imageChanged.emit();
       },
       error: (error) => {
-        console.error('Error setting primary image:', error);
         alert('Failed to set primary image');
       }
     });

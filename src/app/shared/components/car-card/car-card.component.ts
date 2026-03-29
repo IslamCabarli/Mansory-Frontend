@@ -17,16 +17,19 @@ export class CarCardComponent {
   constructor(private carService: CarService) {}
 
   getCarImage(): string {
-    if (this.car.images && this.car.images.length > 0) {
+    // Şəkillərin mövcudluğunu yoxlayırıq
+    if (this.car?.images && this.car.images.length > 0) {
       const primaryImage = this.car.images.find(img => img.is_primary);
       const imagePath = primaryImage ? primaryImage.image_path : this.car.images[0].image_path;
+      
+      // CarService-dəki getImageUrl artıq Cloudinary linkini tanıyacaq
       return this.carService.getImageUrl(imagePath);
     }
     return 'assets/images/placeholder-car.jpg';
   }
 
   getStatusBadgeClass(): string {
-    switch (this.car.status) {
+    switch (this.car?.status) {
       case 'available':
         return 'bg-green-500/20 text-green-400 border-green-500';
       case 'sold':
@@ -39,20 +42,16 @@ export class CarCardComponent {
   }
 
   getStatusText(): string {
-    switch (this.car.status) {
-      case 'available':
-        return 'Available';
-      case 'sold':
-        return 'Sold';
-      case 'reserved':
-        return 'Reserved';
-      default:
-        return this.car.status;
+    switch (this.car?.status) {
+      case 'available': return 'Available';
+      case 'sold': return 'Sold';
+      case 'reserved': return 'Reserved';
+      default: return this.car?.status || '';
     }
   }
 
   formatPrice(): string {
-    if (!this.car.price) return 'Price on request';
+    if (!this.car?.price) return 'Price on request';
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: this.car.currency || 'EUR',

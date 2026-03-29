@@ -74,8 +74,17 @@ export class CarService {
   }
 
   // Helper: Get image URL
-  getImageUrl(path: string): string {
-    if (!path) return 'assets/images/placeholder-car.jpg';
+getImageUrl(path: string | undefined | null): string {
+    if (!path) {
+      return 'assets/images/placeholder-car.jpg';
+    }
+
+    // Əgər path "http" ilə başlayırsa (Cloudinary-dən gələn tam URL-dir), olduğu kimi qaytar
+    if (path.startsWith('http')) {
+      return path;
+    }
+
+    // Əgər local-da qalan köhnə şəkillərdirsə, environment-dəki köhnə storage linkini artır
     return `${environment.imageUrl}/${path}`;
   }
 
