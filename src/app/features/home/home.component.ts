@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CarService } from '../../core/services/car.service';
@@ -20,11 +20,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   featuredCars = signal<Car[]>([]);
   brands = signal<Brand[]>([]);
   isLoading = signal(true);
-  
-  // Slider
+
   sliderCars = signal<Car[]>([]);
+  isSliderLoading = signal(true);
   currentSlide = signal(0);
+
   private sliderInterval: any;
+  private readonly sliderIntervalMs = 5000;
 
   constructor(
     private carService: CarService,
@@ -38,56 +40,85 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.sliderInterval) {
-      clearInterval(this.sliderInterval);
-    }
+    if (this.sliderInterval) clearInterval(this.sliderInterval);
+  }
+
+  get sliderCount() {
+    return this.sliderCars().length;
+  }
+
+  private preloadImage(url: string): Promise<void> {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = url;
+      img.onload = () => resolve();
+      img.onerror = () => resolve();
+    });
+  }
+
+  private async preloadSliderCars(carItems: Car[]): Promise<void> {
+    const urls = carItems.flatMap(car => {
+      if (!car.images?.length) return [];
+      const primary = car.images.find(img => img.is_primary);
+      const path = primary ? primary.image_path : car.images[0].image_path;
+      return [this.carService.getImageUrl(path)];
+    });
+
+    await Promise.all(
+      urls
+        .filter(Boolean)
+        .map(url => this.preloadImage(url))
+    );
   }
 
   loadSliderCars(): void {
-    // İlk 11 featured car-ı yüklə
+    this.isSliderLoading.set(true);
     this.carService.getAll({ per_page: 11, is_featured: true }).subscribe({
-      next: (response) => {
-        if (response.success) {
-          const data: any = response.data;
-          if (data.data) {
-            this.sliderCars.set(data.data);
-          } else if (Array.isArray(response.data)) {
-            this.sliderCars.set(response.data);
-          }
-          
-          // Auto slider başlat - 5 saniyədə bir
-          this.startAutoSlider();
+      next: async (response) => {
+        if (!response.success) { this.isSliderLoading.set(false); return; }
+
+        const cars: Car[] = Array.isArray(response.data)
+          ? response.data
+          : (response.data as any).data ?? [];
+
+        this.sliderCars.set(cars);
+        this.currentSlide.set(0);
+
+        if (cars.length) {
+          await this.preloadSliderCars(cars);
         }
+
+        this.isSliderLoading.set(false);
+        this.startAutoSlider();
       },
       error: (error) => {
         console.error('Error loading slider cars:', error);
+        this.isSliderLoading.set(false);
       }
     });
   }
 
   startAutoSlider(): void {
-    this.sliderInterval = setInterval(() => {
-      this.nextSlide();
-    }, 5000);
+    if (this.sliderInterval) clearInterval(this.sliderInterval);
+    this.sliderInterval = setInterval(() => this.nextSlide(), this.sliderIntervalMs);
   }
 
   nextSlide(): void {
-    const total = this.sliderCars().length;
+    const total = this.sliderCount;
     if (total > 0) {
-      this.currentSlide.update(val => (val + 1) % total);
+      this.currentSlide.update(v => (v + 1) % total);
     }
   }
 
   prevSlide(): void {
-    const total = this.sliderCars().length;
+    const total = this.sliderCount;
     if (total > 0) {
-      this.currentSlide.update(val => (val - 1 + total) % total);
+      this.currentSlide.update(v => (v - 1 + total) % total);
     }
   }
 
   goToSlide(index: number): void {
     this.currentSlide.set(index);
-    // Reset auto slider
     if (this.sliderInterval) {
       clearInterval(this.sliderInterval);
       this.startAutoSlider();
@@ -95,12 +126,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getCarImage(car: Car): string {
-    if (car.images && car.images.length > 0) {
+    if (car.images?.length) {
       const primary = car.images.find(img => img.is_primary);
-      const imagePath = primary ? primary.image_path : car.images[0].image_path;
-      return this.carService.getImageUrl(imagePath);
+      const path = primary ? primary.image_path : car.images[0].image_path;
+      return this.carService.getImageUrl(path);
     }
-    return 'https://images.unsplash.com/photo-1619405399517-d7fce0f13302?q=80&w=2340';
+    return 'assets/images/placeholder-car.jpg';
   }
 
   loadFeaturedCars(): void {
@@ -125,9 +156,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.brands.set(response.data);
         }
       },
-      error: (error) => {
-        console.error('Error loading brands:', error);
-      }
+      error: (error) => console.error('Error loading brands:', error)
     });
   }
 }

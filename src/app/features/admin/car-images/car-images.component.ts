@@ -47,12 +47,12 @@ export class CarImagesComponent {
         this.isUploading.set(false);
         this.selectedFiles = [];
 
-        // Prefer API returned images if available
+        
         const newImages: CarImage[] | undefined = response?.data?.images ?? response?.images;
         if (Array.isArray(newImages) && newImages.length > 0) {
           this.car.images = [...(this.car.images ?? []), ...newImages];
         } else {
-          // Fallback: refetch car from API and merge
+       
           this.reloadCarImages();
         }
 
@@ -93,10 +93,10 @@ export class CarImagesComponent {
           }));
         }
 
-        // Keep explicit primary image field if used by parent
+        
         this.car.primary_image = image;
 
-        // If API returns current images, sync using best response
+       
         const updatedImages: CarImage[] | undefined = response?.data?.images ?? response?.images;
         if (Array.isArray(updatedImages)) {
           this.car.images = updatedImages;
