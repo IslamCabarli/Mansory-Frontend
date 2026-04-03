@@ -19,6 +19,11 @@ export class CarImagesComponent {
 
   constructor(private carService: CarService) {}
 
+  private refreshLocalImagesFromCar(): void {
+    if (!this.car) return;
+    this.car.images = this.car.images ?? [];
+  }
+
   onFileSelected(event: any): void {
     const files = event.target.files;
     if (files) {
@@ -38,10 +43,20 @@ export class CarImagesComponent {
     formData.append('image_type', 'gallery');
 
     this.carService.addImages(this.car.id, formData).subscribe({
-      next: () => {
+      next: (response: any) => {
         this.isUploading.set(false);
         this.selectedFiles = [];
-        this.imageChanged.emit(); // Valideyn komponentə deyirik ki, maşın datalarını yenidən çəksin
+
+        // Prefer API returned images if available
+        const newImages: CarImage[] | undefined = response?.data?.images ?? response?.images;
+        if (Array.isArray(newImages) && newImages.length > 0) {
+          this.car.images = [...(this.car.images ?? []), ...newImages];
+        } else {
+          // Fallback: refetch car from API and merge
+          this.reloadCarImages();
+        }
+
+        this.imageChanged.emit();
       },
       error: (error) => {
         console.error('Error:', error);
@@ -52,25 +67,60 @@ export class CarImagesComponent {
   }
 
   deleteImage(image: CarImage): void {
-    if (!confirm('Are you sure you want to delete this image?')) return;
+    if (!this.car) return;
 
     this.carService.deleteImage(this.car.id, image.id).subscribe({
       next: () => {
-        this.imageChanged.emit(); // Səhifəni reload etmədən datanı yeniləyirik
+        this.car.images = (this.car.images ?? []).filter(img => img.id !== image.id);
+        this.imageChanged.emit();
       },
       error: (error) => {
+        console.error('Error:', error);
         alert('Failed to delete image');
       }
     });
   }
 
   setPrimary(image: CarImage): void {
+    if (!this.car) return;
+
     this.carService.setPrimaryImage(this.car.id, image.id).subscribe({
-      next: () => {
+      next: (response: any) => {
+        if (Array.isArray(this.car.images)) {
+          this.car.images = this.car.images.map(img => ({
+            ...img,
+            is_primary: img.id === image.id
+          }));
+        }
+
+        // Keep explicit primary image field if used by parent
+        this.car.primary_image = image;
+
+        // If API returns current images, sync using best response
+        const updatedImages: CarImage[] | undefined = response?.data?.images ?? response?.images;
+        if (Array.isArray(updatedImages)) {
+          this.car.images = updatedImages;
+        }
+
         this.imageChanged.emit();
       },
       error: (error) => {
+        console.error('Error:', error);
         alert('Failed to set primary image');
+      }
+    });
+  }
+
+  private reloadCarImages(): void {
+    if (!this.car) return;
+    this.carService.getById(this.car.id).subscribe({
+      next: (resp) => {
+        if (resp?.data && (resp.data as Car).images) {
+          this.car.images = (resp.data as Car).images ?? [];
+        }
+      },
+      error: (error) => {
+        console.error('Could not refresh car images', error);
       }
     });
   }
